@@ -1,3 +1,14 @@
+"""Cliente HTTP para consultar Ollama y obtener JSON estructurado.
+
+Envía el prompt del extractor junto con el texto del documento a
+`POST {OLLAMA_BASE_URL}/api/chat`, fuerza la respuesta al esquema JSON
+indicado y parsea el contenido devuelto.
+
+La configuración (URL, modelo y timeout) sale de `settings.config`.
+Si Ollama no responde, el JSON es inválido o no es un objeto, se aborta
+con `SystemExit` y un mensaje orientado al operador.
+"""
+
 import json
 import urllib.error
 import urllib.request
@@ -6,6 +17,20 @@ from settings.config import OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
 
 
 def consultar_ollama(prompt: str, texto: str, esquema: dict) -> dict:
+    """Consulta el chat de Ollama y devuelve un dict con los datos extraídos.
+
+    Args:
+        prompt: Instrucciones de sistema (rol del extractor y reglas de salida).
+        texto: Contenido textual del documento a analizar.
+        esquema: JSON Schema que Ollama debe respetar en `format`.
+
+    Returns:
+        Objeto JSON parseado a partir del mensaje de la respuesta.
+
+    Raises:
+        SystemExit: Si hay error HTTP/de red, o si el contenido no es un
+            objeto JSON válido.
+    """
     payload = {
         "model": OLLAMA_MODEL,
         "messages": [
@@ -45,6 +70,20 @@ def consultar_ollama(prompt: str, texto: str, esquema: dict) -> dict:
 
 
 def _cargar_json(contenido: str) -> dict:
+    """Parsea el contenido de la respuesta a un objeto JSON.
+
+    Si el modelo envuelve el JSON en un bloque markdown (```), lo elimina
+    antes de hacer `json.loads`.
+
+    Args:
+        contenido: Texto crudo del campo `message.content` de Ollama.
+
+    Returns:
+        Diccionario resultante del parseo.
+
+    Raises:
+        SystemExit: Si el texto no es JSON válido o no es un objeto (`dict`).
+    """
     texto = contenido.strip()
     if texto.startswith("```"):
         texto = texto.split("\n", 1)[-1]

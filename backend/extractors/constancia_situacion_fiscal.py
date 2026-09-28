@@ -1,11 +1,26 @@
+"""Extractor de Constancia de Situación Fiscal (SAT, México).
+
+Define el formato de extracción para ese documento: campos escalares
+(identificación y domicilio) y arreglos repetibles (actividades,
+regímenes y obligaciones).
+
+`ExtractorBase` usa `instrucciones`, `campos` y `arreglos` para armar el
+prompt del LLM y el JSON Schema de salida. Regístralo en
+`extractors.EXTRACTORES` bajo la clave `constancia_situacion_fiscal`.
+"""
+
 from extractors.base import Arreglo, Campo, ExtractorBase
 
 
 class ConstanciaSituacionFiscal(ExtractorBase):
-    """Constancia de Situación Fiscal del SAT.
+    """Esquema de extracción de la Constancia de Situación Fiscal del SAT.
 
-    `campos` son datos únicos. `arreglos` son tablas que se repiten.
-    El prompt y el JSON de salida salen de estas dos listas.
+    - `campos`: datos únicos del contribuyente y su domicilio fiscal.
+    - `arreglos`: tablas que se repiten (actividades, regímenes, obligaciones).
+
+    Las instrucciones distinguen persona física (nombre/apellidos) de
+    persona moral (`denominacion_razon_social`) y piden omitir sello,
+    cadena original y avisos legales del final del PDF.
     """
 
     clave = "constancia_situacion_fiscal"
@@ -19,6 +34,7 @@ Cada actividad, régimen y obligación es un elemento de su arreglo.
 Omite el sello digital, la cadena original y los avisos legales del final.
 """.strip()
 
+    # Identificación del contribuyente y datos generales del padrón.
     campos = [
         Campo("rfc", "Registro Federal de Contribuyentes"),
         Campo("curp", "CURP. Vacío si es persona moral"),
@@ -33,6 +49,7 @@ Omite el sello digital, la cadena original y los avisos legales del final.
         Campo("estatus_padron", "Estatus en el padrón"),
         Campo("fecha_ultimo_cambio_estado", "Fecha de último cambio de estado"),
         Campo("lugar_fecha_emision", "Lugar y fecha de emisión de la constancia"),
+        # Domicilio fiscal.
         Campo("codigo_postal", "Código postal del domicilio fiscal"),
         Campo("tipo_vialidad", "Tipo de vialidad"),
         Campo("nombre_vialidad", "Nombre de la vialidad"),
@@ -46,6 +63,7 @@ Omite el sello digital, la cadena original y los avisos legales del final.
         Campo("y_calle", "Y calle"),
     ]
 
+    # Tablas del documento: cada fila es un elemento del arreglo.
     arreglos = [
         Arreglo(
             "actividades_economicas",
