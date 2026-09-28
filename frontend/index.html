@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Extractor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="nebula" aria-hidden="true"></div>
+    <main>
+      <p class="eyebrow">Cosmic Dark · Sci-Fi Nebula</p>
+      <h1>LLM Extractor</h1>
+      <p class="subtitle">Extracción de datos de documentos PDF</p>
+
+      <section class="panel">
+        <div class="status" id="status">Comprobando backend…</div>
+
+        <div class="upload">
+          <p class="upload-label">Selecciona un PDF o una carpeta con PDFs</p>
+          <div class="upload-actions">
+            <label class="file-btn">
+              Elegir archivo(s)
+              <input
+                id="input-files"
+                type="file"
+                accept=".pdf,application/pdf"
+                multiple
+                hidden
+              />
+            </label>
+            <label class="file-btn file-btn-secondary">
+              Elegir carpeta
+              <input
+                id="input-folder"
+                type="file"
+                accept=".pdf,application/pdf"
+                webkitdirectory
+                directory
+                hidden
+              />
+            </label>
+          </div>
+          <p class="upload-summary" id="upload-summary">Ningún archivo seleccionado.</p>
+        </div>
+
+        <button type="button" id="btn-extract" disabled>Ejecutar extracción</button>
+      </section>
+
+      <section class="panel panel-result">
+        <h2>Resultado</h2>
+        <pre id="output">Aún no hay resultados.</pre>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-from config import EXTRACTOR
+from settings.config import EXTRACTOR
 from extractors.base import Arreglo, Campo, ExtractorBase
 from extractors.constancia_situacion_fiscal import ConstanciaSituacionFiscal
 

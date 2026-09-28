@@ -1,4 +1,6 @@
 .env
 output/
+uploads/
 __pycache__/
 *.pyc
+.venv/

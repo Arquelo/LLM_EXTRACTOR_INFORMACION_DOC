@@ -2,7 +2,7 @@ import json
 import urllib.error
 import urllib.request
 
-from config import OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
+from settings.config import OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
 
 
 def consultar_ollama(prompt: str, texto: str, esquema: dict) -> dict:
