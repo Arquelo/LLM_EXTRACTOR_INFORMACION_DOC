@@ -15,7 +15,7 @@ def obtener_extractor(clave: str | None = None) -> ExtractorBase:
         clase = EXTRACTORES[clave]
     except KeyError as exc:
         disponibles = ", ".join(sorted(EXTRACTORES))
-        raise SystemExit(
+        raise ValueError(
             f"Extractor '{clave}' no existe. Disponibles: {disponibles}"
         ) from exc
     return clase()

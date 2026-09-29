@@ -1,6 +1,15 @@
+# Entorno local
 .env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+
+# Datos generados y muestras locales
 output/
 uploads/
-__pycache__/
-*.pyc
-.venv/
+docs/*.pdf

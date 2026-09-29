@@ -1,0 +1,72 @@
+{
+  "archivo": "Constancia de Situación Fiscal 6.pdf",
+  "extractor": "constancia_situacion_fiscal",
+  "datos": {
+    "rfc": "ABP2107078N7",
+    "curp": "",
+    "id_cif": "21080093661",
+    "nombre": "",
+    "primer_apellido": "",
+    "segundo_apellido": "",
+    "denominacion_razon_social": "ASESORES BPADANKE",
+    "regimen_capital": "SOCIEDAD ANONIMA DE CAPITAL VARIABLE",
+    "nombre_comercial": "ASESORES BPADANKE",
+    "fecha_inicio_operaciones": "07 DE JULIO DE 2021",
+    "estatus_padron": "ACTIVO",
+    "fecha_ultimo_cambio_estado": "07 DE JULIO DE 2021",
+    "lugar_fecha_emision": "SALTILLO , COAHUILA DE ZARAGOZA A 10 DE JULIO DE 2025",
+    "codigo_postal": "25204",
+    "tipo_vialidad": "CARRETERA (CARR.)",
+    "nombre_vialidad": "CARRETERA LOS GONZALEZ",
+    "numero_exterior": "2801",
+    "numero_interior": "INT 2",
+    "colonia": "",
+    "localidad": "SALTILLO",
+    "municipio": "SALTILLO",
+    "entidad_federativa": "COAHUILA DE ZARAGOZA",
+    "entre_calle": "BLVD. EULALIO GUTIERREZ TREVIÑO",
+    "y_calle": "BLVD. EULALIO GUTIERREZ TREVIÑO",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Servicios de consultoría en administración",
+        "porcentaje": "100",
+        "fecha_inicio": "07/07/2021",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "Régimen General de Ley Personas Morales",
+        "fecha_inicio": "07/07/2021",
+        "fecha_fin": ""
+      }
+    ],
+    "obligaciones": [
+      {
+        "descripcion": "Pago definitivo mensual de IVA. A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "07/07/2021",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración de proveedores de IVA. A más tardar el último día del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "07/07/2021",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración anual de ISR del ejercicio Personas morales. Dentro de los tres meses siguientes al cierre del ejercicio.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "07/07/2021",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Pago provisional mensual de ISR personas morales régimen general. A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "01/04/2022",
+        "fecha_fin": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "archivo": "Constancia de Situación Fiscal 3.pdf",
+  "extractor": "constancia_situacion_fiscal",
+  "datos": {
+    "rfc": "CLL1104061MA",
+    "curp": "",
+    "id_cif": "14090636758",
+    "nombre": "",
+    "primer_apellido": "",
+    "segundo_apellido": "",
+    "denominacion_razon_social": "CONSULTORES LEGALES LUNA CANALES Y ASOCIADOS",
+    "regimen_capital": "SOCIEDAD CIVIL",
+    "nombre_comercial": "CONSULTORES LEGALES LUNA CANALES Y ASOCIADOS",
+    "fecha_inicio_operaciones": "06 DE ABRIL DE 2011",
+    "estatus_padron": "ACTIVO",
+    "fecha_ultimo_cambio_estado": "12 DE MAYO DE 2011",
+    "lugar_fecha_emision": "SALTILLO , COAHUILA DE ZARAGOZA",
+    "codigo_postal": "25000",
+    "tipo_vialidad": "BOULEVARD (BLVD.)",
+    "nombre_vialidad": "BOULEVARD EMILIO CARRANZA",
+    "numero_exterior": "561",
+    "numero_interior": "",
+    "colonia": "SALTILLO ZONA CENTRO",
+    "localidad": "SALTILLO",
+    "municipio": "SALTILLO",
+    "entidad_federativa": "COAHUILA DE ZARAGOZA",
+    "entre_calle": "CALLE LERDO",
+    "y_calle": "CALLE MUZQUIZ",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Bufetes jurídicos",
+        "porcentaje": "100",
+        "fecha_inicio": "06/04/2011",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "Régimen General de Ley Personas Morales",
+        "fecha_inicio": "06/04/2011",
+        "fecha_fin": ""
+      }
+    ],
+    "obligaciones": [
+      {
+        "descripcion": "Entero de retenciones mensuales de ISR por sueldos y salarios A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "06/04/2011",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración informativa de IVA con la anual de ISR Conjuntamente con la declaración anual del ejercicio.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "06/04/2011",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Pago definitivo mensual de IVA. A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "06/04/2011",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración anual de ISR del ejercicio Personas morales. Dentro de los tres meses siguientes al cierre del ejercicio.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "06/04/2011",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración de proveedores de IVA A más tardar el último día del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "06/04/2011",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Pago provisional mensual de ISR personas morales régimen general A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "01/04/2012",
+        "fecha_fin": ""
+      }
+    ]
+  }
+}

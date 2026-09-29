@@ -1,0 +1,120 @@
+{
+  "archivo": "Constancia de Situación Fiscal 5.pdf",
+  "extractor": "constancia_situacion_fiscal",
+  "datos": {
+    "rfc": "AOF870529IU7",
+    "curp": "",
+    "id_cif": "14110458995",
+    "nombre": "",
+    "primer_apellido": "",
+    "segundo_apellido": "",
+    "denominacion_razon_social": "ABASTECEDORA DE OFICINAS",
+    "regimen_capital": "SOCIEDAD ANONIMA DE CAPITAL VARIABLE",
+    "nombre_comercial": "",
+    "fecha_inicio_operaciones": "01 DE FEBRERO DE 1947",
+    "estatus_padron": "ACTIVO",
+    "fecha_ultimo_cambio_estado": "01 DE FEBRERO DE 1947",
+    "lugar_fecha_emision": "MONTERREY , NUEVO LEON A 01 DE OCTUBRE DE 2025",
+    "codigo_postal": "64000",
+    "tipo_vialidad": "CALLE",
+    "nombre_vialidad": "ZARAGOZA",
+    "numero_exterior": "435",
+    "numero_interior": "",
+    "colonia": "MONTERREY CENTRO",
+    "localidad": "MONTERREY",
+    "municipio": "MONTERREY",
+    "entidad_federativa": "NUEVO LEON",
+    "entre_calle": "CALLE TAPIA",
+    "y_calle": "CALLE MANUEL M DEL LLANO",
+    "actividades_economicas": [
+      {
+        "orden": "",
+        "actividad": "Fabricación de productos de papelería",
+        "porcentaje": "100",
+        "fecha_inicio": "14/06/2005",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "Régimen General de Ley Personas Morales",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      }
+    ],
+    "obligaciones": [
+      {
+        "descripcion": "Entero de retenciones mensuales de ISR por sueldos y salarios",
+        "descripcion_vencimiento": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración informativa anual de pagos y retenciones de servicios profesionales. Personas Morales. Impuesto Sobre la Renta",
+        "descripcion_vencimiento": "A más tardar el 15 de febrero del año siguiente",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración informativa anual de retenciones de ISR por arrendamiento de inmuebles",
+        "descripcion_vencimiento": "A más tardar el 15 de febrero del año siguiente",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Pago provisional mensual de ISR personas morales régimen general",
+        "descripcion_vencimiento": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Entero mensual de retenciones de ISR de ingresos por arrendamiento",
+        "descripcion_vencimiento": "Conjuntamente con la retención por salarios o asimilados a salarios (17 de cada mes en su defecto)",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración informativa de IVA con la anual de ISR Conjuntamente con la declaración anual del ejercicio",
+        "descripcion_vencimiento": "31/03/2002",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Pago definitivo mensual de IVA. A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "31/03/2002",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración anual de ISR del ejercicio Personas morales. Dentro de los tres meses siguientes al cierre del ejercicio",
+        "descripcion_vencimiento": "31/03/2002",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Entero de retención de ISR por servicios profesionales. MENSUAL",
+        "descripcion_vencimiento": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Entero de retenciones de IVA Mensual A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "31/03/2002",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Entero de retenciones mensuales de ISR por ingresos asimilados a salarios",
+        "descripcion_vencimiento": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "01/07/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración de proveedores de IVA A más tardar el último día del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "01/09/2006",
+        "fecha_inicio": "01/09/2006",
+        "fecha_fin": ""
+      }
+    ]
+  }
+}

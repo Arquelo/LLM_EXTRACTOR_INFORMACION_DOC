@@ -1,0 +1,96 @@
+{
+  "archivo": "Constancia de Situación Fiscal 4.pdf",
+  "extractor": "constancia_situacion_fiscal",
+  "datos": {
+    "rfc": "CCA940523UW7",
+    "curp": "",
+    "id_cif": "14051126020",
+    "nombre": "",
+    "primer_apellido": "",
+    "segundo_apellido": "",
+    "denominacion_razon_social": "COMERCIALIZADORA CHARLES",
+    "regimen_capital": "SOCIEDAD ANONIMA DE CAPITAL VARIABLE",
+    "nombre_comercial": "",
+    "fecha_inicio_operaciones": "01 DE JUNIO DE 1994",
+    "estatus_padron": "ACTIVO",
+    "fecha_ultimo_cambio_estado": "01 DE JUNIO DE 1994",
+    "lugar_fecha_emision": "SALTILLO , COAHUILA DE ZARAGOZA A 02 DE JUNIO DE 2025",
+    "codigo_postal": "25240",
+    "tipo_vialidad": "",
+    "nombre_vialidad": "BLVD. HUMBERTO HINOJOSA",
+    "numero_exterior": "636",
+    "numero_interior": "",
+    "colonia": "LA SALLE",
+    "localidad": "SALTILLO",
+    "municipio": "SALTILLO",
+    "entidad_federativa": "COAHUILA DE ZARAGOZA",
+    "entre_calle": "",
+    "y_calle": "",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Comercio al por menor en ferreterías y tlapalerías",
+        "porcentaje": "100",
+        "fecha_inicio": "01/06/1994",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "Régimen General de Ley Personas Morales",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      }
+    ],
+    "obligaciones": [
+      {
+        "descripcion": "Entero de retenciones mensuales de ISR por sueldos y salarios A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración informativa anual de pagos y retenciones de servicios profesionales. Personas Morales. Impuesto Sobre la Renta",
+        "descripcion_vencimiento": "A más tardar el 15 de febrero del año siguiente",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración informativa anual de retenciones de ISR por arrendamiento de inmuebles",
+        "descripcion_vencimiento": "A más tardar el 15 de febrero del año siguiente",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Pago definitivo mensual de IVA. A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Pago provisional mensual de ISR personas morales régimen general",
+        "descripcion_vencimiento": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración anual de ISR del ejercicio Personas morales. Dentro de los tres meses siguientes al cierre del ejercicio.",
+        "descripcion_vencimiento": "Dentro de los tres meses siguientes al cierre del ejercicio.",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración informativa de IVA con la anual de ISR Conjuntamente con la declaración anual del ejercicio.",
+        "descripcion_vencimiento": "31/03/2002",
+        "fecha_inicio": "31/03/2002",
+        "fecha_fin": ""
+      },
+      {
+        "descripcion": "Declaración de proveedores de IVA A más tardar el último día del mes inmediato posterior al periodo que corresponda.",
+        "descripcion_vencimiento": "A más tardar el último día del mes inmediato posterior al periodo que corresponda.",
+        "fecha_inicio": "01/09/2006",
+        "fecha_fin": ""
+      }
+    ]
+  }
+}

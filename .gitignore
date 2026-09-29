@@ -1,5 +1,19 @@
-output/*.json
-extractors/
-llm/
-docs/
+# Entorno
 .env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+
+# Datos locales / generados (backend)
+backend/output/
+backend/uploads/
+backend/docs/*.pdf
+
+# Node
+node_modules/
+dist/

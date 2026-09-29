@@ -22,6 +22,11 @@
       <section class="panel">
         <div class="status" id="status">Comprobando backend…</div>
 
+        <label class="field-label" for="select-extractor">Extractor</label>
+        <select id="select-extractor" class="select" disabled>
+          <option value="">Cargando…</option>
+        </select>
+
         <div class="upload">
           <p class="upload-label">Selecciona un PDF o una carpeta con PDFs</p>
           <div class="upload-actions">
@@ -50,11 +55,17 @@
           <p class="upload-summary" id="upload-summary">Ningún archivo seleccionado.</p>
         </div>
 
-        <button type="button" id="btn-extract" disabled>Ejecutar extracción</button>
+        <div class="actions-row">
+          <button type="button" id="btn-extract" disabled>Ejecutar extracción</button>
+          <button type="button" id="btn-clear" class="btn-secondary" disabled>
+            Limpiar resultados
+          </button>
+        </div>
       </section>
 
       <section class="panel panel-result">
         <h2>Resultado</h2>
+        <div id="result-summary" class="result-summary" hidden></div>
         <pre id="output">Aún no hay resultados.</pre>
       </section>
     </main>

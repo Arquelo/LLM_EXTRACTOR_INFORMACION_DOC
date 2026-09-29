@@ -184,6 +184,78 @@ h1 {
   font-size: 0.88rem;
 }
 
+.field-label {
+  display: block;
+  margin: 0 0 0.35rem;
+  color: var(--gris-azulado);
+  font-size: 0.85rem;
+}
+
+.select {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 9px;
+  border: 1px solid var(--azul-grisaceo);
+  background: color-mix(in srgb, var(--azul-noche) 70%, var(--azul-petroleo));
+  color: var(--blanco-frio);
+  font: inherit;
+}
+
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.btn-secondary {
+  border-color: color-mix(in srgb, var(--ambar) 50%, var(--azul-grisaceo));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--naranja-quemado) 70%, var(--azul-petroleo)) 0%,
+    color-mix(in srgb, var(--ambar) 35%, var(--azul-petroleo)) 100%
+  );
+  box-shadow: 0 0 16px rgba(215, 154, 69, 0.2);
+}
+
+.result-summary {
+  margin-bottom: 0.9rem;
+}
+
+.summary-meta {
+  margin: 0 0 0.65rem;
+  color: var(--gris-azulado);
+  font-size: 0.9rem;
+}
+
+.result-item {
+  margin-bottom: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--azul-grisaceo);
+  background: color-mix(in srgb, var(--azul-noche) 55%, transparent);
+}
+
+.result-item.ok {
+  border-color: color-mix(in srgb, var(--cian) 45%, var(--azul-grisaceo));
+}
+
+.result-item.fail {
+  border-color: color-mix(in srgb, var(--danger) 55%, var(--azul-grisaceo));
+  background: color-mix(in srgb, var(--rojo-marron) 55%, transparent);
+}
+
+.result-item p,
+.result-item ul {
+  margin: 0.35rem 0 0;
+  color: var(--gris-azulado);
+  font-size: 0.88rem;
+}
+
+.result-item ul {
+  padding-left: 1.1rem;
+}
+
 button {
   appearance: none;
   border: 1px solid color-mix(in srgb, var(--cian) 45%, var(--azul-electrico));
