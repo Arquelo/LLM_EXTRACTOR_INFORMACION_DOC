@@ -34,10 +34,22 @@ python server.py
 |--------|------|-------------|
 | GET | `/health` | API + estado de Ollama / modelo |
 | GET | `/api/extractors` | Extractores disponibles |
-| POST | `/api/extract` | Multipart `files` + opcional `extractor` |
+| POST | `/api/extract` | Multipart PDF/TXT + opcional `extractor` → reporte |
+| POST | `/api/extract/muestras` | Lote académico en `docs/muestras/` |
+| GET | `/api/report` | Último reporte (tasas éxito/parcial/fallo) |
 | GET | `/api/results` | Lista JSON en `output/` |
 | DELETE | `/api/results` | Vacía `output/` |
 | GET | `/api/results/{nombre}` | Contenido de un resultado |
+
+### Checklist académico
+
+- Esquema Pydantic + formatos (numérico, fecha, enum `estatus_padron`)
+- Structured output Ollama (`format` JSON Schema)
+- Validación programática post-modelo (formatos + Pydantic)
+- Estados por documento: `exito` / `parcial` / `fallido`
+- Reintentos con tope ante JSON inválido / HTTP transitorio
+- 6 muestras versionadas (2 difíciles) en `backend/docs/muestras/`
+- Reporte web + `output/reporte_lote.json` / `.csv`
 
 ### Tests
 

@@ -236,13 +236,66 @@ h1 {
   background: color-mix(in srgb, var(--azul-noche) 55%, transparent);
 }
 
+.rates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.rate-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--azul-grisaceo);
+  background: color-mix(in srgb, var(--azul-noche) 55%, transparent);
+}
+
+.rate-card span {
+  color: var(--gris-azulado);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.rate-card strong {
+  font-size: 1.45rem;
+  color: var(--blanco-frio);
+}
+
+.rate-card small {
+  color: var(--gris-azulado);
+  font-size: 0.8rem;
+}
+
+.rate-card.exito { border-color: color-mix(in srgb, var(--cian) 55%, var(--azul-grisaceo)); }
+.rate-card.parcial { border-color: color-mix(in srgb, var(--ambar) 55%, var(--azul-grisaceo)); }
+.rate-card.fallido { border-color: color-mix(in srgb, var(--danger) 55%, var(--azul-grisaceo)); }
+
+.result-item.exito,
 .result-item.ok {
   border-color: color-mix(in srgb, var(--cian) 45%, var(--azul-grisaceo));
 }
 
+.result-item.parcial {
+  border-color: color-mix(in srgb, var(--ambar) 55%, var(--azul-grisaceo));
+  background: color-mix(in srgb, var(--naranja-quemado) 25%, transparent);
+}
+
+.result-item.fallido,
 .result-item.fail {
   border-color: color-mix(in srgb, var(--danger) 55%, var(--azul-grisaceo));
   background: color-mix(in srgb, var(--rojo-marron) 55%, transparent);
+}
+
+.mini-json {
+  margin-top: 0.55rem;
+  max-height: 10rem;
+  overflow: auto;
+  font-size: 0.78rem;
+  padding: 0.55rem 0.65rem;
 }
 
 .result-item p,

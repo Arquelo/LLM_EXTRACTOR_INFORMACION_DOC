@@ -15,9 +15,11 @@
   <body>
     <div class="nebula" aria-hidden="true"></div>
     <main>
-      <p class="eyebrow">Cosmic Dark · Sci-Fi Nebula</p>
+      <p class="eyebrow">Structured Output · Confiabilidad</p>
       <h1>LLM Extractor</h1>
-      <p class="subtitle">Extracción de datos de documentos PDF</p>
+      <p class="subtitle">
+        Extracción validada de documentos (PDF/TXT) con reporte éxito / parcial / fallido
+      </p>
 
       <section class="panel">
         <div class="status" id="status">Comprobando backend…</div>
@@ -28,14 +30,14 @@
         </select>
 
         <div class="upload">
-          <p class="upload-label">Selecciona un PDF o una carpeta con PDFs</p>
+          <p class="upload-label">Selecciona PDF/TXT o una carpeta</p>
           <div class="upload-actions">
             <label class="file-btn">
               Elegir archivo(s)
               <input
                 id="input-files"
                 type="file"
-                accept=".pdf,application/pdf"
+                accept=".pdf,.txt,application/pdf,text/plain"
                 multiple
                 hidden
               />
@@ -45,7 +47,7 @@
               <input
                 id="input-folder"
                 type="file"
-                accept=".pdf,application/pdf"
+                accept=".pdf,.txt,application/pdf,text/plain"
                 webkitdirectory
                 directory
                 hidden
@@ -57,6 +59,12 @@
 
         <div class="actions-row">
           <button type="button" id="btn-extract" disabled>Ejecutar extracción</button>
+          <button type="button" id="btn-muestras" class="btn-secondary" disabled>
+            Correr muestras académicas
+          </button>
+          <button type="button" id="btn-report" class="btn-secondary" disabled>
+            Ver último reporte
+          </button>
           <button type="button" id="btn-clear" class="btn-secondary" disabled>
             Limpiar resultados
           </button>
@@ -64,8 +72,10 @@
       </section>
 
       <section class="panel panel-result">
-        <h2>Resultado</h2>
+        <h2>Reporte del lote</h2>
+        <div id="rates" class="rates" hidden></div>
         <div id="result-summary" class="result-summary" hidden></div>
+        <h2>JSON completo</h2>
         <pre id="output">Aún no hay resultados.</pre>
       </section>
     </main>

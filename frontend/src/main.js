@@ -1,7 +1,10 @@
 const statusEl = document.getElementById("status");
 const outputEl = document.getElementById("output");
 const resultSummaryEl = document.getElementById("result-summary");
+const ratesEl = document.getElementById("rates");
 const btnExtract = document.getElementById("btn-extract");
+const btnMuestras = document.getElementById("btn-muestras");
+const btnReport = document.getElementById("btn-report");
 const btnClear = document.getElementById("btn-clear");
 const inputFiles = document.getElementById("input-files");
 const inputFolder = document.getElementById("input-folder");
@@ -9,28 +12,33 @@ const uploadSummary = document.getElementById("upload-summary");
 const selectExtractor = document.getElementById("select-extractor");
 
 /** @type {File[]} */
-let selectedPdfs = [];
+let selectedDocs = [];
 let backendOk = false;
 
-function esPdf(file) {
+function esDocumento(file) {
   const nombre = (file.name || "").toLowerCase();
-  return nombre.endsWith(".pdf") || file.type === "application/pdf";
+  return (
+    nombre.endsWith(".pdf") ||
+    nombre.endsWith(".txt") ||
+    file.type === "application/pdf" ||
+    file.type === "text/plain"
+  );
 }
 
 function actualizarSeleccion(files) {
-  selectedPdfs = Array.from(files).filter(esPdf);
-  if (!selectedPdfs.length) {
-    uploadSummary.textContent = "Ningún PDF válido en la selección.";
-  } else if (selectedPdfs.length === 1) {
-    uploadSummary.textContent = `1 archivo: ${selectedPdfs[0].name}`;
+  selectedDocs = Array.from(files).filter(esDocumento);
+  if (!selectedDocs.length) {
+    uploadSummary.textContent = "Ningún PDF/TXT válido en la selección.";
+  } else if (selectedDocs.length === 1) {
+    uploadSummary.textContent = `1 archivo: ${selectedDocs[0].name}`;
   } else {
-    uploadSummary.textContent = `${selectedPdfs.length} archivos PDF listos.`;
+    uploadSummary.textContent = `${selectedDocs.length} archivos listos.`;
   }
   actualizarBoton();
 }
 
 function actualizarBoton() {
-  btnExtract.disabled = !(backendOk && selectedPdfs.length > 0);
+  btnExtract.disabled = !(backendOk && selectedDocs.length > 0);
 }
 
 function detalleError(data) {
@@ -41,22 +49,34 @@ function detalleError(data) {
   return data.detail || data.error || JSON.stringify(data);
 }
 
+function etiquetaEstado(estado) {
+  if (estado === "exito") return "Éxito";
+  if (estado === "parcial") return "Parcial";
+  if (estado === "fallido") return "Fallido";
+  return estado || "?";
+}
+
+function pintarRates(data) {
+  ratesEl.hidden = false;
+  ratesEl.innerHTML = `
+    <div class="rate-card exito"><span>Éxito</span><strong>${data.exitosos ?? 0}</strong><small>${data.tasa_exito ?? 0}%</small></div>
+    <div class="rate-card parcial"><span>Parcial</span><strong>${data.parciales ?? 0}</strong><small>${data.tasa_parcial ?? 0}%</small></div>
+    <div class="rate-card fallido"><span>Fallido</span><strong>${data.fallidos ?? 0}</strong><small>${data.tasa_fallo ?? 0}%</small></div>
+    <div class="rate-card total"><span>Total</span><strong>${data.total ?? 0}</strong><small>modelo ${data.modelo || ""}</small></div>
+  `;
+}
+
 function pintarResumen(data) {
-  const fallidos = (data.resultados || []).filter((r) => r.ok === false);
-  const exitosos = data.exitosos ?? (data.total || 0) - fallidos.length;
+  const resultados = data.resultados || data.reporte?.resultados || [];
   resultSummaryEl.hidden = false;
   resultSummaryEl.innerHTML = "";
 
-  const meta = document.createElement("p");
-  meta.className = "summary-meta";
-  meta.textContent = `Total ${data.total} · OK ${exitosos} · Fallidos ${fallidos.length} · modelo ${data.modelo}`;
-  resultSummaryEl.appendChild(meta);
-
-  for (const r of data.resultados || []) {
+  for (const r of resultados) {
+    const estado = r.estado || (r.ok ? "exito" : "fallido");
     const item = document.createElement("article");
-    item.className = r.ok ? "result-item ok" : "result-item fail";
+    item.className = `result-item ${estado}`;
     const titulo = document.createElement("strong");
-    titulo.textContent = `${r.ok ? "OK" : "Error"} · ${r.archivo}`;
+    titulo.textContent = `${etiquetaEstado(estado)} · ${r.archivo}`;
     item.appendChild(titulo);
     if (r.error) {
       const msg = document.createElement("p");
@@ -72,7 +92,29 @@ function pintarResumen(data) {
       }
       item.appendChild(ul);
     }
+    if (r.datos && Object.keys(r.datos).length) {
+      const pre = document.createElement("pre");
+      pre.className = "mini-json";
+      pre.textContent = JSON.stringify(r.datos, null, 2);
+      item.appendChild(pre);
+    }
     resultSummaryEl.appendChild(item);
+  }
+}
+
+function mostrarLote(data) {
+  outputEl.textContent = JSON.stringify(data, null, 2);
+  pintarRates(data);
+  pintarResumen(data);
+  const fallidos = data.fallidos ?? 0;
+  const parciales = data.parciales ?? 0;
+  if (fallidos || parciales) {
+    statusEl.textContent =
+      `Lote listo · éxito ${data.tasa_exito}% · parcial ${data.tasa_parcial}% · fallo ${data.tasa_fallo}%`;
+    statusEl.className = "status error";
+  } else {
+    statusEl.textContent = `Lote listo · ${data.total} documento(s) con éxito total`;
+    statusEl.className = "status ok";
   }
 }
 
@@ -106,25 +148,27 @@ async function checkHealth() {
         `Listo · modelo ${data.modelo} · extractor ${data.extractor} · Ollama OK`;
       statusEl.className = "status ok";
       backendOk = true;
-      btnClear.disabled = false;
     } else if (data.status === "degraded") {
       statusEl.textContent =
         `Backend up · Ollama: ${ollama.error || "modelo no disponible"}`;
       statusEl.className = "status error";
       backendOk = false;
-      btnClear.disabled = false;
     } else {
       statusEl.textContent =
         `Backend up · Ollama inaccesible: ${ollama.error || "error"}`;
       statusEl.className = "status error";
       backendOk = false;
-      btnClear.disabled = false;
     }
+    btnMuestras.disabled = !backendOk;
+    btnReport.disabled = false;
+    btnClear.disabled = false;
   } catch {
     statusEl.textContent =
       "No se pudo conectar con el backend en http://127.0.0.1:8000";
     statusEl.className = "status error";
     backendOk = false;
+    btnMuestras.disabled = true;
+    btnReport.disabled = true;
     btnClear.disabled = true;
   }
   actualizarBoton();
@@ -145,20 +189,21 @@ inputFolder.addEventListener("change", () => {
 });
 
 btnExtract.addEventListener("click", async () => {
-  if (!selectedPdfs.length) {
-    statusEl.textContent = "Selecciona al menos un PDF o una carpeta.";
+  if (!selectedDocs.length) {
+    statusEl.textContent = "Selecciona al menos un PDF/TXT o una carpeta.";
     statusEl.className = "status error";
     return;
   }
 
   btnExtract.disabled = true;
-  statusEl.textContent = `Extrayendo ${selectedPdfs.length} archivo(s)… puede tardar varios minutos.`;
+  statusEl.textContent = `Extrayendo ${selectedDocs.length} archivo(s)…`;
   statusEl.className = "status";
   outputEl.textContent = "Procesando…";
   resultSummaryEl.hidden = true;
+  ratesEl.hidden = true;
 
   const form = new FormData();
-  for (const file of selectedPdfs) {
+  for (const file of selectedDocs) {
     form.append("files", file, file.name);
   }
   if (selectExtractor.value) {
@@ -166,32 +211,62 @@ btnExtract.addEventListener("click", async () => {
   }
 
   try {
-    const res = await fetch("/api/extract", {
-      method: "POST",
-      body: form,
-    });
+    const res = await fetch("/api/extract", { method: "POST", body: form });
     const data = await res.json();
     if (!res.ok) throw new Error(detalleError(data) || `HTTP ${res.status}`);
-
-    outputEl.textContent = JSON.stringify(data, null, 2);
-    pintarResumen(data);
-
-    const fallidos = (data.resultados || []).filter((r) => r.ok === false);
-    if (fallidos.length) {
-      statusEl.textContent =
-        `Procesado con avisos · ${data.total} archivo(s), ${fallidos.length} con error`;
-      statusEl.className = "status error";
-    } else {
-      statusEl.textContent = `Listo · ${data.total} archivo(s) procesado(s)`;
-      statusEl.className = "status ok";
-    }
+    mostrarLote(data);
   } catch (err) {
     outputEl.textContent = String(err.message || err);
     resultSummaryEl.hidden = true;
+    ratesEl.hidden = true;
     statusEl.textContent = "Error durante la extracción";
     statusEl.className = "status error";
   } finally {
     actualizarBoton();
+  }
+});
+
+btnMuestras.addEventListener("click", async () => {
+  btnMuestras.disabled = true;
+  statusEl.textContent = "Procesando muestras académicas (docs/muestras)…";
+  statusEl.className = "status";
+  outputEl.textContent = "Procesando…";
+  resultSummaryEl.hidden = true;
+  ratesEl.hidden = true;
+
+  const qs = selectExtractor.value
+    ? `?extractor=${encodeURIComponent(selectExtractor.value)}`
+    : "";
+  try {
+    const res = await fetch(`/api/extract/muestras${qs}`, { method: "POST" });
+    const data = await res.json();
+    if (!res.ok) throw new Error(detalleError(data) || `HTTP ${res.status}`);
+    mostrarLote(data);
+  } catch (err) {
+    outputEl.textContent = String(err.message || err);
+    statusEl.textContent = "Error al procesar muestras";
+    statusEl.className = "status error";
+  } finally {
+    btnMuestras.disabled = !backendOk;
+  }
+});
+
+btnReport.addEventListener("click", async () => {
+  try {
+    const res = await fetch("/api/report");
+    const data = await res.json();
+    if (!res.ok) throw new Error(detalleError(data) || `HTTP ${res.status}`);
+    mostrarLote({
+      ...data,
+      ...data.resumen,
+      resultados: data.resultados,
+      reporte: data,
+    });
+    statusEl.textContent = "Último reporte cargado";
+    statusEl.className = "status ok";
+  } catch (err) {
+    statusEl.textContent = String(err.message || err);
+    statusEl.className = "status error";
   }
 });
 
@@ -205,6 +280,7 @@ btnClear.addEventListener("click", async () => {
     statusEl.textContent = `Resultados limpiados · ${data.eliminados ?? 0} archivo(s)`;
     statusEl.className = "status ok";
     resultSummaryEl.hidden = true;
+    ratesEl.hidden = true;
     outputEl.textContent = "Aún no hay resultados.";
   } catch (err) {
     statusEl.textContent = String(err.message || err);
