@@ -54,6 +54,7 @@ def nombre_seguro(nombre: str) -> str:
     """Normaliza un nombre de archivo para guardarlo sin path traversal."""
     base = Path(nombre).name.strip() or "documento.pdf"
     limpio = _NOMBRE_SEGURO.sub("_", base).strip("._") or "documento.pdf"
-    if not limpio.lower().endswith(".pdf"):
+    sufijo = Path(limpio).suffix.lower()
+    if sufijo not in {".pdf", ".txt"}:
         limpio = f"{limpio}.pdf"
     return limpio

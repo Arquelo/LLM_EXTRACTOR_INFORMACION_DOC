@@ -11,8 +11,8 @@ import pytest
 from extract import nombre_seguro, procesar, texto_pdf
 from llm.ollama_client import OllamaError
 
-# Los mocks apuntan a donde se usan los símbolos (pipeline / pdf).
-_TEXTO = "extraction.pipeline.texto_pdf"
+# Los mocks apuntan a donde se usan los símbolos (pipeline).
+_TEXTO = "extraction.pipeline.leer_documento"
 _OLLAMA = "extraction.pipeline.consultar_ollama"
 _OUT = "extraction.pipeline.OUTPUT_DIR"
 
@@ -47,14 +47,14 @@ def _pdf_falso(tmp_path: Path, nombre: str = "doc.pdf") -> Path:
 
 
 def test_procesar_sin_pdfs_levanta() -> None:
-    with pytest.raises(FileNotFoundError, match="No hay archivos PDF"):
+    with pytest.raises(FileNotFoundError, match="No hay documentos"):
         procesar(pdfs=[])
 
 
 def test_procesar_pdf_sin_texto(tmp_path: Path) -> None:
     pdf = _pdf_falso(tmp_path, "vacio.pdf")
     with (
-        patch(_TEXTO, return_value="   "),
+        patch("extraction.pipeline.leer_documento", return_value="   "),
         patch(_OUT, tmp_path / "out"),
     ):
         (tmp_path / "out").mkdir()
@@ -62,7 +62,8 @@ def test_procesar_pdf_sin_texto(tmp_path: Path) -> None:
 
     assert len(resultados) == 1
     assert resultados[0]["ok"] is False
-    assert resultados[0]["error"] == "El PDF no tiene texto extraíble."
+    assert resultados[0]["estado"] == "fallido"
+    assert "texto extraíble" in (resultados[0]["error"] or "")
     assert resultados[0]["errores_validacion"] == []
     assert isinstance(resultados[0]["datos"], dict)
 
@@ -90,8 +91,8 @@ def test_procesar_pdf_ilegible_no_tumba_lote(tmp_path: Path) -> None:
     assert len(resultados) == 2
     por_nombre = {r["archivo"]: r for r in resultados}
     assert por_nombre["malo.pdf"]["ok"] is False
-    assert "No se pudo leer el PDF" in (por_nombre["malo.pdf"]["error"] or "")
-    assert "No se pudo leer el PDF" not in (por_nombre["bueno.pdf"]["error"] or "")
+    assert "No se pudo leer el documento" in (por_nombre["malo.pdf"]["error"] or "")
+    assert "No se pudo leer el documento" not in (por_nombre["bueno.pdf"]["error"] or "")
     assert por_nombre["bueno.pdf"]["archivo"] == "bueno.pdf"
 
 
@@ -124,12 +125,13 @@ def test_procesar_ollama_error_por_archivo(tmp_path: Path) -> None:
     assert "Ollama caído" not in (resultados[1]["error"] or "")
 
 
-def test_procesar_validacion_fallida_conserva_datos(tmp_path: Path) -> None:
+def test_procesar_validacion_parcial_conserva_datos(tmp_path: Path) -> None:
     pdf = _pdf_falso(tmp_path, "doc.pdf")
     bruto = {
         "rfc": "XAXX010101000",
         "curp": "CURP_INVALIDA",
-        "colonia": "12",
+        "estatus_padron": "ACTIVO",
+        "colonia": "CENTRO",
         "codigo_postal": "01000",
         "fecha_inicio_operaciones": "15/03/2019",
     }
@@ -145,8 +147,7 @@ def test_procesar_validacion_fallida_conserva_datos(tmp_path: Path) -> None:
     assert len(resultados) == 1
     r = resultados[0]
     assert r["ok"] is False
-    assert r["error"] is not None
-    assert "formato" in (r["error"] or "").lower()
+    assert r["estado"] == "parcial"
     assert r["datos"]["curp"] == "CURP_INVALIDA"
     assert any(e["campo"] == "curp" for e in r["errores_validacion"])
 
@@ -157,7 +158,8 @@ def test_procesar_exito(tmp_path: Path) -> None:
         "rfc": "XAXX010101000",
         "curp": "",
         "id_cif": "123",
-        "colonia": "12",
+        "estatus_padron": "ACTIVO",
+        "colonia": "CENTRO",
         "codigo_postal": "01000",
         "fecha_inicio_operaciones": "01/01/2020",
         "fecha_ultimo_cambio_estado": "02/02/2020",
@@ -177,6 +179,7 @@ def test_procesar_exito(tmp_path: Path) -> None:
 
     assert len(resultados) == 1
     assert resultados[0]["ok"] is True
+    assert resultados[0]["estado"] == "exito"
     assert resultados[0]["error"] is None
     assert resultados[0]["errores_validacion"] == []
     assert (out / "ok.json").is_file()

@@ -29,7 +29,7 @@ from settings.config import (
 logger = logging.getLogger(__name__)
 
 _DETALLE_MAX = 500
-# Errores HTTP que merecen reintento (transitorios).
+
 _HTTP_RETRIABLE = frozenset({408, 425, 429, 500, 502, 503, 504})
 
 
@@ -254,23 +254,29 @@ def _interpretar_respuesta(
         data = respuesta.json()
     except json.JSONDecodeError as exc:
         raise OllamaError(
-            f"Ollama devolvió un cuerpo no JSON: {_truncar_detalle(respuesta.text)}"
+            f"Ollama devolvió un cuerpo no JSON: {_truncar_detalle(respuesta.text)}",
+            retriable=True,
         ) from exc
 
     if not isinstance(data, dict):
-        raise OllamaError("Ollama devolvió un JSON que no es un objeto.")
+        raise OllamaError(
+            "Ollama devolvió un JSON que no es un objeto.",
+            retriable=True,
+        )
 
     mensaje = data.get("message")
     if not isinstance(mensaje, dict):
         raise OllamaError(
             "Respuesta de Ollama sin 'message' objeto. "
-            f"Claves recibidas: {sorted(data.keys())}"
+            f"Claves recibidas: {sorted(data.keys())}",
+            retriable=True,
         )
 
     contenido = mensaje.get("content")
     if not isinstance(contenido, str) or not contenido.strip():
         raise OllamaError(
-            "Ollama no devolvió message.content usable (vacío o ausente)."
+            "Ollama no devolvió message.content usable (vacío o ausente).",
+            retriable=True,
         )
 
     return cargar_json(contenido)
@@ -280,7 +286,7 @@ def cargar_json(contenido: str) -> dict[str, Any]:
     """Parsea el contenido de la respuesta a un objeto JSON.
 
     Si el modelo envuelve el JSON en un bloque markdown (```), lo elimina
-    antes de hacer `json.loads`.
+    antes de hacer `json.loads`. Los fallos de parseo son reintentables.
     """
     texto = contenido.strip()
     if texto.startswith("```"):
@@ -292,9 +298,15 @@ def cargar_json(contenido: str) -> dict[str, Any]:
     try:
         datos = json.loads(texto)
     except json.JSONDecodeError as exc:
-        raise OllamaError(f"Ollama no devolvió JSON válido: {exc}") from exc
+        raise OllamaError(
+            f"Ollama no devolvió JSON válido: {exc}",
+            retriable=True,
+        ) from exc
     if not isinstance(datos, dict):
-        raise OllamaError("Ollama no devolvió un objeto JSON.")
+        raise OllamaError(
+            "Ollama no devolvió un objeto JSON.",
+            retriable=True,
+        )
     return datos
 
 

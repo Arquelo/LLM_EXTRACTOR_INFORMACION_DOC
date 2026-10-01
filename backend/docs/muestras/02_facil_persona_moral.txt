@@ -1,0 +1,27 @@
+CONSTANCIA DE SITUACIÓN FISCAL
+RFC: ABC120101XXX
+CURP:
+idCIF: 9988776655
+
+Denominación o Razón Social: COMERCIAL EJEMPLO SA DE CV
+Régimen de capital: S.A. DE C.V.
+Nombre Comercial: EJEMPLO MART
+Fecha inicio de operaciones: 01/02/2012
+Estatus en el padrón: ACTIVO
+Fecha de último cambio de estado: 10/10/2021
+
+Domicilio fiscal
+Código Postal: 44100
+Tipo de Vialidad: AVENIDA
+Nombre de Vialidad: JUAREZ
+Número Exterior: 250
+Colonia: AMERICANA
+Municipio: GUADALAJARA
+Entidad Federativa: JALISCO
+
+Actividades económicas
+1 | Servicios de consultoría | 60 | 01/02/2012 |
+2 | Comercio al por mayor | 40 | 01/02/2012 |
+
+Regímenes
+General de Ley Personas Morales | 01/02/2012 |

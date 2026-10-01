@@ -1,0 +1,21 @@
+Constancia situacion fiscal (escaneo ruidoso)
+
+RFC posible: XAXX010101000 o tambien XEXX010101000 (ambiguo)
+CURP: CURP_INVALIDA_123
+idCIF: 1122334455
+Nombre: ANA
+Apellido1: RUIZ
+Fecha inicio: 32/13/2019
+Estatus padrron: VIGENTE
+CP: 1234
+Colonia: 12 DE OCTUBRE
+
+Actividades:
+1. Algo de servicios 50% desde enero 2019
+2. sin porcentaje ni fecha
+
+Regimen: no especificado con claridad
+Obligaciones: ilegible
+
+Caso difícil: mezcla datos válidos (idCIF) con formatos incorrectos
+y un estatus categórico fuera del enum esperado.

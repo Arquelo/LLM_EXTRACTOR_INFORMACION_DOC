@@ -4,12 +4,12 @@ Define el formato de extracción para ese documento: campos escalares
 (identificación y domicilio) y arreglos repetibles (actividades,
 regímenes y obligaciones).
 
-`ExtractorBase` usa `instrucciones`, `campos` y `arreglos` para armar el
-prompt del LLM y el JSON Schema de salida. Regístralo en
-`extractors.EXTRACTORES` bajo la clave `constancia_situacion_fiscal`.
+La validación combina reglas de formato (`Campo`) con el esquema Pydantic
+en `extractors.schemas.constancia_situacion_fiscal`.
 """
 
 from extractors.base import (
+    FORMATO_CATEGORICO,
     FORMATO_CODIGO_POSTAL,
     FORMATO_CURP,
     FORMATO_FECHA,
@@ -20,18 +20,14 @@ from extractors.base import (
     Campo,
     ExtractorBase,
 )
+from extractors.schemas.constancia_situacion_fiscal import (
+    ESTATUS_OPCIONES,
+    validar_con_pydantic,
+)
 
 
 class ConstanciaSituacionFiscal(ExtractorBase):
-    """Esquema de extracción de la Constancia de Situación Fiscal del SAT.
-
-    - `campos`: datos únicos del contribuyente y su domicilio fiscal.
-    - `arreglos`: tablas que se repiten (actividades, regímenes, obligaciones).
-
-    Las instrucciones distinguen persona física (nombre/apellidos) de
-    persona moral (`denominacion_razon_social`) y piden omitir sello,
-    cadena original y avisos legales del final del PDF.
-    """
+    """Esquema de extracción de la Constancia de Situación Fiscal del SAT."""
 
     clave = "constancia_situacion_fiscal"
     tipo_documento = "Constancia de Situación Fiscal del SAT (México)"
@@ -43,11 +39,13 @@ denominacion_razon_social y deja vacíos nombre y apellidos cuando no apliquen.
 Cada actividad, régimen y obligación es un elemento de su arreglo.
 Omite el sello digital, la cadena original y los avisos legales del final.
 Las fechas deben ir en formato dd/mm/aaaa. CURP y RFC en mayúsculas.
+estatus_padron debe ser exactamente uno de: ACTIVO, SUSPENDIDO, CANCELADO,
+NO LOCALIZADO, OTRO.
+Campos obligatorios: rfc, fecha_inicio_operaciones, estatus_padron, codigo_postal.
 """.strip()
 
-    # Identificación del contribuyente y datos generales del padrón.
     campos = [
-        Campo("rfc", "Registro Federal de Contribuyentes", FORMATO_RFC),
+        Campo("rfc", "Registro Federal de Contribuyentes", FORMATO_RFC, obligatorio=True),
         Campo("curp", "CURP. Vacío si es persona moral", FORMATO_CURP),
         Campo("id_cif", "Identificador electrónico idCIF", FORMATO_NUMERICO),
         Campo("nombre", "Nombre o nombres de la persona física"),
@@ -60,25 +58,32 @@ Las fechas deben ir en formato dd/mm/aaaa. CURP y RFC en mayúsculas.
             "fecha_inicio_operaciones",
             "Fecha de inicio de operaciones",
             FORMATO_FECHA,
+            obligatorio=True,
         ),
-        Campo("estatus_padron", "Estatus en el padrón"),
+        Campo(
+            "estatus_padron",
+            "Estatus en el padrón (categórico)",
+            FORMATO_CATEGORICO,
+            obligatorio=True,
+            opciones=ESTATUS_OPCIONES,
+        ),
         Campo(
             "fecha_ultimo_cambio_estado",
             "Fecha de último cambio de estado",
             FORMATO_FECHA,
         ),
         Campo("lugar_fecha_emision", "Lugar y fecha de emisión de la constancia"),
-        # Domicilio fiscal.
         Campo(
             "codigo_postal",
             "Código postal del domicilio fiscal",
             FORMATO_CODIGO_POSTAL,
+            obligatorio=True,
         ),
         Campo("tipo_vialidad", "Tipo de vialidad"),
         Campo("nombre_vialidad", "Nombre de la vialidad"),
         Campo("numero_exterior", "Número exterior"),
         Campo("numero_interior", "Número interior"),
-        Campo("colonia", "Nombre o clave numérica de la colonia", FORMATO_NUMERICO),
+        Campo("colonia", "Nombre de la colonia"),
         Campo("localidad", "Nombre de la localidad"),
         Campo("municipio", "Municipio o demarcación territorial"),
         Campo("entidad_federativa", "Entidad federativa"),
@@ -86,7 +91,6 @@ Las fechas deben ir en formato dd/mm/aaaa. CURP y RFC en mayúsculas.
         Campo("y_calle", "Y calle"),
     ]
 
-    # Tablas del documento: cada fila es un elemento del arreglo.
     arreglos = [
         Arreglo(
             "actividades_economicas",
@@ -96,11 +100,7 @@ Las fechas deben ir en formato dd/mm/aaaa. CURP y RFC en mayúsculas.
                 Campo("actividad", "Descripción de la actividad económica"),
                 Campo("porcentaje", "Porcentaje", FORMATO_PORCENTAJE),
                 Campo("fecha_inicio", "Fecha de inicio", FORMATO_FECHA),
-                Campo(
-                    "fecha_fin",
-                    "Fecha de fin. Vacío si no aparece",
-                    FORMATO_FECHA,
-                ),
+                Campo("fecha_fin", "Fecha de fin. Vacío si no aparece", FORMATO_FECHA),
             ],
         ),
         Arreglo(
@@ -109,11 +109,7 @@ Las fechas deben ir en formato dd/mm/aaaa. CURP y RFC en mayúsculas.
             [
                 Campo("regimen", "Nombre del régimen"),
                 Campo("fecha_inicio", "Fecha de inicio", FORMATO_FECHA),
-                Campo(
-                    "fecha_fin",
-                    "Fecha de fin. Vacío si no aparece",
-                    FORMATO_FECHA,
-                ),
+                Campo("fecha_fin", "Fecha de fin. Vacío si no aparece", FORMATO_FECHA),
             ],
         ),
         Arreglo(
@@ -123,11 +119,10 @@ Las fechas deben ir en formato dd/mm/aaaa. CURP y RFC en mayúsculas.
                 Campo("descripcion", "Descripción de la obligación"),
                 Campo("descripcion_vencimiento", "Descripción del vencimiento"),
                 Campo("fecha_inicio", "Fecha de inicio", FORMATO_FECHA),
-                Campo(
-                    "fecha_fin",
-                    "Fecha de fin. Vacío si no aparece",
-                    FORMATO_FECHA,
-                ),
+                Campo("fecha_fin", "Fecha de fin. Vacío si no aparece", FORMATO_FECHA),
             ],
         ),
     ]
+
+    def validar_dominio(self, datos: dict) -> list[dict]:
+        return validar_con_pydantic(datos)

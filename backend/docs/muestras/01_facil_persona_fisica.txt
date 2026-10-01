@@ -1,0 +1,27 @@
+CONSTANCIA DE SITUACIÓN FISCAL
+RFC: GARC850101ABC
+CURP: GARC850101HDFRRN09
+idCIF: 1234567890
+
+Nombre: JUAN CARLOS
+Primer Apellido: GARCIA
+Segundo Apellido: LOPEZ
+Fecha inicio de operaciones: 15/03/2010
+Estatus en el padrón: ACTIVO
+Fecha de último cambio de estado: 01/01/2020
+
+Domicilio fiscal
+Código Postal: 01000
+Tipo de Vialidad: CALLE
+Nombre de Vialidad: REFORMA
+Número Exterior: 100
+Número Interior: 2
+Colonia: CENTRO
+Municipio: CUAUHTEMOC
+Entidad Federativa: CIUDAD DE MEXICO
+
+Actividades económicas
+1 | Comercio al por menor | 100 | 15/03/2010 |
+
+Regímenes
+Régimen de Actividades Empresariales | 15/03/2010 |

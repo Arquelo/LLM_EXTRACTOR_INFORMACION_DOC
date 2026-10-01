@@ -1,21 +1,10 @@
 """Servicio HTTP del extractor de documentos.
 
-Expone una API FastAPI que orquesta la extracción de PDFs con Ollama y
-consulta los JSON ya generados en `output/`.
+Expone una API FastAPI que orquesta la extracción con Ollama y
+consulta los JSON / reportes generados en `output/`.
 
 Arranque (desde la carpeta backend/):
     python server.py
-
-Host, puerto, CORS y límites salen de `settings.config` / `.env`.
-La documentación interactiva queda en `/docs`.
-
-Rutas:
-    GET    /health                 Estado del API + reachability de Ollama.
-    GET    /api/extractors         Extractores registrados y el activo por defecto.
-    POST   /api/extract            Recibe PDF(s) por multipart y ejecuta extracción.
-    GET    /api/results            Lista los JSON en `output/`.
-    DELETE /api/results            Vacía `output/` (acción explícita).
-    GET    /api/results/{nombre}   Devuelve el contenido de un JSON concreto.
 """
 
 from __future__ import annotations
@@ -26,10 +15,11 @@ import uuid
 from pathlib import Path
 
 import uvicorn
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
-from extract import nombre_seguro, procesar
+from extract import nombre_seguro, procesar_con_reporte, procesar_muestras
+from extraction.report import cargar_reporte
 from extractors import EXTRACTORES
 from llm.ollama_client import verificar_ollama
 from settings.config import (
@@ -45,8 +35,11 @@ from settings.path import OUTPUT_DIR, UPLOADS_DIR
 
 app = FastAPI(
     title="LLM Extractor Informacion Doc",
-    description="API para extraer datos estructurados de documentos PDF con Ollama.",
-    version="0.2.0",
+    description=(
+        "API para extraer datos estructurados de documentos (PDF/TXT) con Ollama, "
+        "validación Pydantic y reporte éxito/parcial/fallido."
+    ),
+    version="0.3.0",
 )
 
 app.add_middleware(
@@ -60,7 +53,6 @@ app.add_middleware(
 
 @app.get("/health")
 def health() -> dict:
-    """Comprueba API + Ollama (tags) y disponibilidad del modelo configurado."""
     ollama = verificar_ollama()
     status = "ok" if ollama.get("ok") and ollama.get("modelo_disponible") else "degraded"
     if not ollama.get("ok"):
@@ -75,7 +67,6 @@ def health() -> dict:
 
 @app.get("/api/extractors")
 def listar_extractores() -> dict:
-    """Lista las claves de extractores disponibles y cuál está activo por defecto."""
     return {
         "activo": EXTRACTOR,
         "disponibles": sorted(EXTRACTORES.keys()),
@@ -86,25 +77,24 @@ def listar_extractores() -> dict:
 async def ejecutar_extraccion(
     files: list[UploadFile] = File(
         ...,
-        description="Uno o más PDF (archivo suelto o contenido de una carpeta).",
+        description="Uno o más PDF/TXT (archivo suelto o carpeta).",
     ),
     extractor: str | None = Form(
         default=None,
         description="Clave del extractor. Si se omite, usa el configurado en .env.",
     ),
 ) -> dict:
-    """Recibe PDF(s) del cliente, los guarda temporalmente y ejecuta la extracción."""
-    pdfs = [f for f in files if _es_pdf(f)]
-    if not pdfs:
+    docs = [f for f in files if _es_documento(f)]
+    if not docs:
         raise HTTPException(
             status_code=400,
-            detail="No se recibieron archivos PDF. Selecciona un archivo o una carpeta.",
+            detail="No se recibieron PDF/TXT. Selecciona archivo(s) o una carpeta.",
         )
-    if len(pdfs) > MAX_UPLOAD_FILES:
+    if len(docs) > MAX_UPLOAD_FILES:
         raise HTTPException(
             status_code=400,
             detail=(
-                f"Demasiados PDF ({len(pdfs)}). "
+                f"Demasiados archivos ({len(docs)}). "
                 f"Máximo permitido: {MAX_UPLOAD_FILES}."
             ),
         )
@@ -115,7 +105,7 @@ async def ejecutar_extraccion(
 
     try:
         usados: set[str] = set()
-        for archivo in pdfs:
+        for archivo in docs:
             original = archivo.filename or "documento.pdf"
             destino_nombre = _nombre_unico(nombre_seguro(original), usados)
             usados.add(destino_nombre.lower())
@@ -141,7 +131,7 @@ async def ejecutar_extraccion(
             )
 
         try:
-            resultados = procesar(extractor, rutas)
+            resultados, reporte = procesar_con_reporte(extractor, rutas)
         except FileNotFoundError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
         except ValueError as exc:
@@ -149,36 +139,56 @@ async def ejecutar_extraccion(
     finally:
         shutil.rmtree(lote, ignore_errors=True)
 
-    return {
-        "extractor": resultados[0]["extractor"] if resultados else EXTRACTOR,
-        "modelo": OLLAMA_MODEL,
-        "total": len(resultados),
-        "exitosos": sum(1 for r in resultados if r.get("ok", True)),
-        "fallidos": sum(1 for r in resultados if not r.get("ok", True)),
-        "resultados": resultados,
-    }
+    return _respuesta_lote(reporte)
+
+
+@app.post("/api/extract/muestras")
+def ejecutar_muestras(
+    extractor: str | None = Query(default=None),
+) -> dict:
+    """Procesa el lote académico versionado en `docs/muestras/`."""
+    try:
+        _resultados, reporte = procesar_muestras(extractor)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return _respuesta_lote(reporte)
+
+
+@app.get("/api/report")
+def obtener_reporte() -> dict:
+    """Último reporte de lote (éxito / parcial / fallido + tasas)."""
+    reporte = cargar_reporte()
+    if reporte is None:
+        raise HTTPException(
+            status_code=404,
+            detail="No hay reporte aún. Ejecuta /api/extract o /api/extract/muestras.",
+        )
+    return reporte
 
 
 @app.get("/api/results")
 def listar_resultados() -> dict:
-    """Lista los JSON en `output/` (no modifica la carpeta)."""
     if not OUTPUT_DIR.exists():
         return {"total": 0, "archivos": []}
 
-    archivos = sorted(p.name for p in OUTPUT_DIR.glob("*.json"))
+    archivos = sorted(
+        p.name
+        for p in OUTPUT_DIR.glob("*.json")
+        if p.name not in {"reporte_lote.json"}
+    )
     return {"total": len(archivos), "archivos": archivos}
 
 
 @app.delete("/api/results")
 def limpiar_resultados() -> dict:
-    """Vacía `output/`. Acción destructiva explícita (no usar GET)."""
     eliminados = _limpiar_output_dir()
     return {"eliminados": eliminados, "total": 0, "archivos": []}
 
 
 @app.get("/api/results/{nombre}")
 def obtener_resultado(nombre: str) -> dict:
-    """Devuelve el contenido de un resultado JSON por nombre de archivo."""
     if "/" in nombre or "\\" in nombre or nombre.startswith("."):
         raise HTTPException(status_code=400, detail="Nombre de archivo inválido.")
 
@@ -194,13 +204,31 @@ def obtener_resultado(nombre: str) -> dict:
         ) from exc
 
 
-def _es_pdf(archivo: UploadFile) -> bool:
+def _respuesta_lote(reporte: dict) -> dict:
+    resumen = reporte.get("resumen") or {}
+    return {
+        "extractor": reporte.get("extractor", EXTRACTOR),
+        "modelo": reporte.get("modelo", OLLAMA_MODEL),
+        "total": resumen.get("total", 0),
+        "exitosos": resumen.get("exitosos", 0),
+        "parciales": resumen.get("parciales", 0),
+        "fallidos": resumen.get("fallidos", 0),
+        "tasa_exito": resumen.get("tasa_exito", 0),
+        "tasa_parcial": resumen.get("tasa_parcial", 0),
+        "tasa_fallo": resumen.get("tasa_fallo", 0),
+        "reporte": reporte,
+        "resultados": reporte.get("resultados", []),
+    }
+
+
+def _es_documento(archivo: UploadFile) -> bool:
     nombre = (archivo.filename or "").lower()
     tipo = (archivo.content_type or "").lower()
-    return nombre.endswith(".pdf") or tipo in {
-        "application/pdf",
-        "application/x-pdf",
-    }
+    return (
+        nombre.endswith(".pdf")
+        or nombre.endswith(".txt")
+        or tipo in {"application/pdf", "application/x-pdf", "text/plain"}
+    )
 
 
 def _nombre_unico(nombre: str, usados: set[str]) -> str:

@@ -1,0 +1,26 @@
+CONSTANCIA DE SITUACIÓN FISCAL
+RFC: HERN750315JKL
+CURP: HERN750315HDFRRS01
+idCIF: 3344556677
+
+Nombre: LUIS
+Primer Apellido: HERNANDEZ
+Segundo Apellido: MARTINEZ
+Fecha inicio de operaciones: 10/08/2005
+Estatus en el padrón: SUSPENDIDO
+Fecha de último cambio de estado: 12/12/2023
+
+Domicilio fiscal
+Código Postal: 64000
+Tipo de Vialidad: CALLE
+Nombre de Vialidad: MORELOS
+Número Exterior: 12
+Colonia: CENTRO
+Municipio: MONTERREY
+Entidad Federativa: NUEVO LEON
+
+Actividades económicas
+1 | Arrendamiento | 100 | 10/08/2005 | 12/12/2023
+
+Regímenes
+Arrendamiento | 10/08/2005 | 12/12/2023

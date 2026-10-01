@@ -172,6 +172,22 @@ def test_consultar_ollama_reintenta_y_recupera() -> None:
     assert cliente.post.call_count == 2
 
 
+def test_consultar_ollama_reintenta_json_invalido() -> None:
+    cliente = MagicMock(spec=httpx.Client)
+    cliente.post.side_effect = [
+        _respuesta(body={"message": {"content": "no-es-json"}}),
+        _respuesta(body={"message": {"content": '{"ok": true}'}}),
+    ]
+
+    with patch("llm.ollama_client.time.sleep"):
+        datos = consultar_ollama(
+            "p", "t", {}, client=cliente, retries=2, retry_backoff=0.01
+        )
+
+    assert datos == {"ok": True}
+    assert cliente.post.call_count == 2
+
+
 def test_verificar_ollama_ok() -> None:
     cliente = MagicMock(spec=httpx.Client)
     cliente.get.return_value = _respuesta(

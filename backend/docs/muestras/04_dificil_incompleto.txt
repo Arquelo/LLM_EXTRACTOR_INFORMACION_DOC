@@ -1,0 +1,18 @@
+DOCUMENTO FISCAL INCOMPLETO / ROTULO ATIPICO
+
+Contribuyente sin RFC legible en el encabezado.
+Nombre aparente: PEDRO SANCHEZ
+Se menciona un estatus raro: "EN REVISION"
+Inicio operaciones aparece como 2018-07-01 (formato ISO, no dd/mm/aaaa)
+Código postal: desconocido
+CURP parcial: PEDR
+idCIF: ABC (no numérico)
+
+Domicilio confuso:
+Calle sin número, colonia "N/A", municipio omitido.
+
+Tabla de actividades cortada:
+orden ? actividad comercio porcentaje ??
+
+Este caso deliberadamente omite campos obligatorios y usa formatos inválidos
+para probar éxito parcial / fallo controlado.

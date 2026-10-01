@@ -23,6 +23,7 @@ FORMATO_CURP = "curp"
 FORMATO_RFC = "rfc"
 FORMATO_FECHA = "fecha"
 FORMATO_PORCENTAJE = "porcentaje"
+FORMATO_CATEGORICO = "categorico"
 
 FORMATOS: dict[str, Formato] = {
     FORMATO_NUMERICO: Formato(
@@ -62,6 +63,12 @@ FORMATOS: dict[str, Formato] = {
         r"^\d+([.,]\d+)?$",
         "100",
     ),
+    FORMATO_CATEGORICO: Formato(
+        FORMATO_CATEGORICO,
+        "valor categórico (enum)",
+        r"^.+$",
+        "ACTIVO",
+    ),
 }
 
 
@@ -70,10 +77,20 @@ class Campo:
     clave: str
     descripcion: str
     formato: str | None = None
+    obligatorio: bool = False
+    opciones: tuple[str, ...] | None = None
 
     def formato_def(self) -> Formato | None:
         if not self.formato:
             return None
+        if self.formato == FORMATO_CATEGORICO and self.opciones:
+            unidos = "|".join(re.escape(o) for o in self.opciones)
+            return Formato(
+                FORMATO_CATEGORICO,
+                f"categórico: {' | '.join(self.opciones)}",
+                rf"^({unidos})$",
+                self.opciones[0],
+            )
         try:
             return FORMATOS[self.formato]
         except KeyError as exc:
@@ -193,11 +210,7 @@ class ExtractorBase:
         return resultado
 
     def validar(self, datos: dict) -> list[dict]:
-        """Verifica formatos tras la respuesta del modelo.
-
-        Devuelve una lista de errores (vacía si todo es válido). Cada error
-        incluye `campo`, `valor` y `motivo`. No lanza excepciones.
-        """
+        """Verifica formatos y obligatoriedad tras la respuesta del modelo."""
         if not isinstance(datos, dict):
             return [
                 {
@@ -211,6 +224,15 @@ class ExtractorBase:
 
         for campo in self.campos:
             valor = _texto(datos.get(campo.clave))
+            if campo.obligatorio and valor == "":
+                errores.append(
+                    {
+                        "campo": campo.clave,
+                        "valor": "",
+                        "motivo": f"Campo obligatorio '{campo.clave}' vacío.",
+                    }
+                )
+                continue
             motivo = _motivo_formato(campo, valor)
             if motivo:
                 errores.append(
@@ -250,15 +272,40 @@ class ExtractorBase:
                             }
                         )
 
-        return errores
+        errores.extend(self.validar_dominio(datos))
+        return _deduplicar_errores(errores)
+
+    def validar_dominio(self, datos: dict) -> list[dict]:
+        """Hook para validación Pydantic u otras reglas del dominio."""
+        return []
+
+    def clasificar_estado(
+        self,
+        datos: dict,
+        errores_validacion: list[dict],
+        *,
+        error_duro: str | None = None,
+    ) -> str:
+        """Devuelve 'exito', 'parcial' o 'fallido'."""
+        if error_duro:
+            return "fallido"
+        if not isinstance(datos, dict):
+            return "fallido"
+        if not errores_validacion:
+            return "exito"
+        if _tiene_datos_utiles(datos, self):
+            return "parcial"
+        return "fallido"
 
     def _descripcion_con_formato(self, campo: Campo) -> str:
         fmt = campo.formato_def()
+        req = "obligatorio" if campo.obligatorio else "opcional"
         if not fmt:
-            return campo.descripcion
+            return f"{campo.descripcion} [{req}]"
+        vacio = "vacío no permitido" if campo.obligatorio else "vacío si no aplica"
         return (
             f"{campo.descripcion} "
-            f"[formato: {fmt.etiqueta}; ejemplo: {fmt.ejemplo}; vacío si no aplica]"
+            f"[{req}; formato: {fmt.etiqueta}; ejemplo: {fmt.ejemplo}; {vacio}]"
         )
 
     def _propiedad_schema(self, campo: Campo) -> dict:
@@ -266,10 +313,15 @@ class ExtractorBase:
             "type": "string",
             "description": self._descripcion_con_formato(campo),
         }
+        if campo.opciones:
+            prop["enum"] = list(campo.opciones) if campo.obligatorio else ["", *campo.opciones]
+            return prop
         fmt = campo.formato_def()
         if fmt:
-            # Cadena vacía siempre permitida; si hay valor, debe cumplir el patrón.
-            prop["pattern"] = f"^$|{fmt.patron}"
+            if campo.obligatorio:
+                prop["pattern"] = fmt.patron
+            else:
+                prop["pattern"] = f"^$|{fmt.patron}"
         return prop
 
     def _ejemplo_json(self) -> str:
@@ -290,17 +342,46 @@ def _texto(valor) -> str:
 
 
 def _motivo_formato(campo: Campo, valor: str) -> str | None:
-    """None si el valor es válido (incluye vacío)."""
+    """None si el valor es válido (incluye vacío no obligatorio)."""
     if valor == "":
         return None
     fmt = campo.formato_def()
     if not fmt:
         return None
-    # CURP/RFC suelen venir en minúsculas; normalizamos solo para chequear.
-    candidato = valor.upper() if campo.formato in {FORMATO_CURP, FORMATO_RFC} else valor
-    if re.fullmatch(fmt.patron, candidato):
+    candidato = (
+        valor.upper()
+        if campo.formato in {FORMATO_CURP, FORMATO_RFC, FORMATO_CATEGORICO}
+        else valor
+    )
+    if campo.formato == FORMATO_CATEGORICO and campo.opciones:
+        if candidato in {o.upper() for o in campo.opciones}:
+            return None
+    if re.fullmatch(fmt.patron, candidato, flags=re.IGNORECASE if campo.formato == FORMATO_CATEGORICO else 0):
         return None
     return (
         f"El valor no cumple el formato '{fmt.etiqueta}' "
         f"(ejemplo: {fmt.ejemplo})."
     )
+
+
+def _tiene_datos_utiles(datos: dict, extractor: ExtractorBase) -> bool:
+    for campo in extractor.campos:
+        if _texto(datos.get(campo.clave)):
+            return True
+    for arreglo in extractor.arreglos:
+        filas = datos.get(arreglo.clave) or []
+        if isinstance(filas, list) and any(isinstance(f, dict) and any(f.values()) for f in filas):
+            return True
+    return False
+
+
+def _deduplicar_errores(errores: list[dict]) -> list[dict]:
+    vistos: set[tuple[str, str]] = set()
+    unicos: list[dict] = []
+    for err in errores:
+        clave = (str(err.get("campo", "")), str(err.get("motivo", "")))
+        if clave in vistos:
+            continue
+        vistos.add(clave)
+        unicos.append(err)
+    return unicos

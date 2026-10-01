@@ -1,0 +1,34 @@
+CONSTANCIA DE SITUACIÓN FISCAL
+RFC: LOPE900202XYZ
+CURP: LOPE900202MDFRRN08
+idCIF: 5566778899
+
+Nombre: MARIA
+Primer Apellido: LOPEZ
+Segundo Apellido: PEREZ
+Fecha inicio de operaciones: 20/05/2015
+Estatus en el padrón: ACTIVO
+Fecha de último cambio de estado: 05/05/2022
+Lugar y fecha de emisión: CIUDAD DE MEXICO A 05 DE MAYO DE 2022
+
+Domicilio fiscal
+Código Postal: 03100
+Tipo de Vialidad: CALLE
+Nombre de Vialidad: INSURGENTES
+Número Exterior: 45
+Número Interior: B
+Colonia: DEL VALLE
+Localidad: CIUDAD DE MEXICO
+Municipio: BENITO JUAREZ
+Entidad Federativa: CIUDAD DE MEXICO
+Entre calle: MIGUEL LAURENT
+Y calle: PROVIDENCIA
+
+Actividades económicas
+1 | Servicios profesionales | 100 | 20/05/2015 |
+
+Regímenes
+Régimen Simplificado de Confianza | 01/01/2022 |
+
+Obligaciones
+Declaración anual | En el mes de abril | 20/05/2015 |
