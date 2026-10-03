@@ -41,7 +41,8 @@ Omite el sello digital, la cadena original y los avisos legales del final.
 Las fechas deben ir en formato dd/mm/aaaa. CURP y RFC en mayúsculas.
 estatus_padron debe ser exactamente uno de: ACTIVO, SUSPENDIDO, CANCELADO,
 NO LOCALIZADO, OTRO.
-Campos obligatorios: rfc, fecha_inicio_operaciones, estatus_padron, codigo_postal.
+Campos obligatorios (mínimos de negocio para iniciar pagos): rfc,
+fecha_inicio_operaciones, estatus_padron. El resto es opcional.
 """.strip()
 
     campos = [
@@ -77,7 +78,6 @@ Campos obligatorios: rfc, fecha_inicio_operaciones, estatus_padron, codigo_posta
             "codigo_postal",
             "Código postal del domicilio fiscal",
             FORMATO_CODIGO_POSTAL,
-            obligatorio=True,
         ),
         Campo("tipo_vialidad", "Tipo de vialidad"),
         Campo("nombre_vialidad", "Nombre de la vialidad"),

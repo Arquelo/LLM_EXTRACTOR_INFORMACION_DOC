@@ -9,7 +9,9 @@ __pycache__/
 .pytest_cache/
 pytest-cache-files-*/
 
-# Datos locales / generados (backend)
+# Datos locales / generados
+output/
+llm/
 backend/output/
 backend/uploads/
 backend/docs/*.pdf

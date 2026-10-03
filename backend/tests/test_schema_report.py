@@ -28,7 +28,20 @@ def test_pydantic_acepta_obligatorios() -> None:
                 "rfc": "XAXX010101000",
                 "fecha_inicio_operaciones": "01/01/2020",
                 "estatus_padron": "ACTIVO",
-                "codigo_postal": "01000",
+            }
+        )
+        == []
+    )
+
+
+def test_pydantic_codigo_postal_es_opcional() -> None:
+    assert (
+        validar_con_pydantic(
+            {
+                "rfc": "XAXX010101000",
+                "fecha_inicio_operaciones": "01/01/2020",
+                "estatus_padron": "ACTIVO",
+                "codigo_postal": "",
             }
         )
         == []

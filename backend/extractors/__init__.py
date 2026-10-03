@@ -2,8 +2,6 @@ from settings.config import EXTRACTOR
 from extractors.base import Arreglo, Campo, ExtractorBase
 from extractors.constancia_situacion_fiscal import ConstanciaSituacionFiscal
 
-# Para otro documento (por ejemplo calificaciones): crea la clase, regístrala aquí
-# y cambia EXTRACTOR en .env. El prompt y el orden de los datos viajan con la clase.
 EXTRACTORES: dict[str, type[ExtractorBase]] = {
     ConstanciaSituacionFiscal.clave: ConstanciaSituacionFiscal,
 }

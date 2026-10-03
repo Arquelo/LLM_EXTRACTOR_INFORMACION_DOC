@@ -57,10 +57,14 @@ class ConstanciaSituacionFiscalDatos(BaseModel):
 
     model_config = ConfigDict(extra="ignore", str_strip_whitespace=True)
 
-    rfc: str = Field(default="", description="RFC obligatorio")
-    fecha_inicio_operaciones: str = Field(default="", description="Fecha dd/mm/aaaa")
-    estatus_padron: str = Field(default="", description="Enum categórico")
-    codigo_postal: str = Field(default="", description="CP 5 dígitos")
+    rfc: str = Field(default="", description="RFC obligatorio (negocio)")
+    fecha_inicio_operaciones: str = Field(
+        default="", description="Fecha dd/mm/aaaa obligatoria (negocio)"
+    )
+    estatus_padron: str = Field(
+        default="", description="Enum categórico obligatorio (negocio)"
+    )
+    codigo_postal: str = Field(default="", description="CP 5 dígitos (opcional)")
     id_cif: str = Field(default="", description="idCIF numérico")
 
     curp: str = ""
@@ -99,13 +103,6 @@ class ConstanciaSituacionFiscalDatos(BaseModel):
     def fecha_obligatoria(cls, valor: str) -> str:
         if not (valor or "").strip():
             raise ValueError("Campo obligatorio 'fecha_inicio_operaciones' vacío")
-        return valor.strip()
-
-    @field_validator("codigo_postal")
-    @classmethod
-    def cp_obligatorio(cls, valor: str) -> str:
-        if not (valor or "").strip():
-            raise ValueError("Campo obligatorio 'codigo_postal' vacío")
         return valor.strip()
 
     @field_validator("estatus_padron")
@@ -163,11 +160,12 @@ def validar_con_pydantic(datos: dict[str, Any]) -> list[dict[str, str]]:
         return errores
 
 
+# Obligatorios de negocio: mínimos para iniciar el flujo de pagos en la plataforma.
+# Ver backend/docs/decisiones_validacion.md
 CAMPOS_OBLIGATORIOS = (
     "rfc",
     "fecha_inicio_operaciones",
     "estatus_padron",
-    "codigo_postal",
 )
 
 ESTATUS_OPCIONES = tuple(e.value for e in EstatusPadron)
