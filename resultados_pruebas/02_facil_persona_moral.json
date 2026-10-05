@@ -1,0 +1,59 @@
+{
+  "archivo": "02_facil_persona_moral.txt",
+  "extractor": "constancia_situacion_fiscal",
+  "modelo": "llama3.2",
+  "ok": true,
+  "estado": "exito",
+  "datos": {
+    "rfc": "ABC120101XXX",
+    "curp": "",
+    "id_cif": "9988776655",
+    "nombre": "",
+    "primer_apellido": "",
+    "segundo_apellido": "",
+    "denominacion_razon_social": "COMERCIAL EJEMPLO SA DE CV",
+    "regimen_capital": "S.A. DE C.V.",
+    "nombre_comercial": "EJEMPLO MART",
+    "fecha_inicio_operaciones": "01/02/2012",
+    "estatus_padron": "ACTIVO",
+    "fecha_ultimo_cambio_estado": "10/10/2021",
+    "lugar_fecha_emision": "",
+    "codigo_postal": "44100",
+    "tipo_vialidad": "AVENIDA",
+    "nombre_vialidad": "JUAREZ",
+    "numero_exterior": "250",
+    "numero_interior": "",
+    "colonia": "AMERICANA",
+    "localidad": "",
+    "municipio": "GUADALAJARA",
+    "entidad_federativa": "JALISCO",
+    "entre_calle": "",
+    "y_calle": "",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Servicios de consultoría",
+        "porcentaje": "60",
+        "fecha_inicio": "01/02/2012",
+        "fecha_fin": ""
+      },
+      {
+        "orden": "2",
+        "actividad": "Comercio al por mayor",
+        "porcentaje": "40",
+        "fecha_inicio": "01/02/2012",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "General de Ley Personas Morales",
+        "fecha_inicio": "01/02/2012",
+        "fecha_fin": ""
+      }
+    ],
+    "obligaciones": []
+  },
+  "errores_validacion": [],
+  "error": null
+}

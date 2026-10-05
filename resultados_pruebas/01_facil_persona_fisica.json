@@ -1,0 +1,52 @@
+{
+  "archivo": "01_facil_persona_fisica.txt",
+  "extractor": "constancia_situacion_fiscal",
+  "modelo": "llama3.2",
+  "ok": true,
+  "estado": "exito",
+  "datos": {
+    "rfc": "GARC850101ABC",
+    "curp": "GARC850101HDFRRN09",
+    "id_cif": "1234567890",
+    "nombre": "JUAN CARLOS",
+    "primer_apellido": "GARCIA",
+    "segundo_apellido": "LOPEZ",
+    "denominacion_razon_social": "",
+    "regimen_capital": "",
+    "nombre_comercial": "",
+    "fecha_inicio_operaciones": "15/03/2010",
+    "estatus_padron": "ACTIVO",
+    "fecha_ultimo_cambio_estado": "01/01/2020",
+    "lugar_fecha_emision": "",
+    "codigo_postal": "01000",
+    "tipo_vialidad": "CALLE",
+    "nombre_vialidad": "REFORMA",
+    "numero_exterior": "100",
+    "numero_interior": "2",
+    "colonia": "CENTRO",
+    "localidad": "",
+    "municipio": "CUAUHTEMOC",
+    "entidad_federativa": "CIUDAD DE MEXICO",
+    "entre_calle": "",
+    "y_calle": "",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Comercio al por menor",
+        "porcentaje": "100",
+        "fecha_inicio": "15/03/2010",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "Régimen de Actividades Empresariales",
+        "fecha_inicio": "15/03/2010",
+        "fecha_fin": ""
+      }
+    ],
+    "obligaciones": []
+  },
+  "errores_validacion": [],
+  "error": null
+}

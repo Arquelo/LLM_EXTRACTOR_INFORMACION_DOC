@@ -1,0 +1,385 @@
+{
+  "extractor": "constancia_situacion_fiscal",
+  "modelo": "llama3.2",
+  "resumen": {
+    "total": 6,
+    "exitosos": 4,
+    "parciales": 2,
+    "fallidos": 0,
+    "tasa_exito": 66.67,
+    "tasa_parcial": 33.33,
+    "tasa_fallo": 0.0
+  },
+  "resultados": [
+    {
+      "archivo": "01_facil_persona_fisica.txt",
+      "extractor": "constancia_situacion_fiscal",
+      "modelo": "llama3.2",
+      "ok": true,
+      "estado": "exito",
+      "datos": {
+        "rfc": "GARC850101ABC",
+        "curp": "GARC850101HDFRRN09",
+        "id_cif": "1234567890",
+        "nombre": "JUAN CARLOS",
+        "primer_apellido": "GARCIA",
+        "segundo_apellido": "LOPEZ",
+        "denominacion_razon_social": "",
+        "regimen_capital": "",
+        "nombre_comercial": "",
+        "fecha_inicio_operaciones": "15/03/2010",
+        "estatus_padron": "ACTIVO",
+        "fecha_ultimo_cambio_estado": "01/01/2020",
+        "lugar_fecha_emision": "",
+        "codigo_postal": "01000",
+        "tipo_vialidad": "CALLE",
+        "nombre_vialidad": "REFORMA",
+        "numero_exterior": "100",
+        "numero_interior": "2",
+        "colonia": "CENTRO",
+        "localidad": "",
+        "municipio": "CUAUHTEMOC",
+        "entidad_federativa": "CIUDAD DE MEXICO",
+        "entre_calle": "",
+        "y_calle": "",
+        "actividades_economicas": [
+          {
+            "orden": "1",
+            "actividad": "Comercio al por menor",
+            "porcentaje": "100",
+            "fecha_inicio": "15/03/2010",
+            "fecha_fin": ""
+          }
+        ],
+        "regimenes": [
+          {
+            "regimen": "Régimen de Actividades Empresariales",
+            "fecha_inicio": "15/03/2010",
+            "fecha_fin": ""
+          }
+        ],
+        "obligaciones": []
+      },
+      "errores_validacion": [],
+      "error": null
+    },
+    {
+      "archivo": "02_facil_persona_moral.txt",
+      "extractor": "constancia_situacion_fiscal",
+      "modelo": "llama3.2",
+      "ok": true,
+      "estado": "exito",
+      "datos": {
+        "rfc": "ABC120101XXX",
+        "curp": "",
+        "id_cif": "9988776655",
+        "nombre": "",
+        "primer_apellido": "",
+        "segundo_apellido": "",
+        "denominacion_razon_social": "COMERCIAL EJEMPLO SA DE CV",
+        "regimen_capital": "S.A. DE C.V.",
+        "nombre_comercial": "EJEMPLO MART",
+        "fecha_inicio_operaciones": "01/02/2012",
+        "estatus_padron": "ACTIVO",
+        "fecha_ultimo_cambio_estado": "10/10/2021",
+        "lugar_fecha_emision": "",
+        "codigo_postal": "44100",
+        "tipo_vialidad": "AVENIDA",
+        "nombre_vialidad": "JUAREZ",
+        "numero_exterior": "250",
+        "numero_interior": "",
+        "colonia": "AMERICANA",
+        "localidad": "",
+        "municipio": "GUADALAJARA",
+        "entidad_federativa": "JALISCO",
+        "entre_calle": "",
+        "y_calle": "",
+        "actividades_economicas": [
+          {
+            "orden": "1",
+            "actividad": "Servicios de consultoría",
+            "porcentaje": "60",
+            "fecha_inicio": "01/02/2012",
+            "fecha_fin": ""
+          },
+          {
+            "orden": "2",
+            "actividad": "Comercio al por mayor",
+            "porcentaje": "40",
+            "fecha_inicio": "01/02/2012",
+            "fecha_fin": ""
+          }
+        ],
+        "regimenes": [
+          {
+            "regimen": "General de Ley Personas Morales",
+            "fecha_inicio": "01/02/2012",
+            "fecha_fin": ""
+          }
+        ],
+        "obligaciones": []
+      },
+      "errores_validacion": [],
+      "error": null
+    },
+    {
+      "archivo": "03_facil_activo_completo.txt",
+      "extractor": "constancia_situacion_fiscal",
+      "modelo": "llama3.2",
+      "ok": true,
+      "estado": "exito",
+      "datos": {
+        "rfc": "LOPE900202XYZ",
+        "curp": "LOPE900202MDFRRN08",
+        "id_cif": "5566778899",
+        "nombre": "MARIA",
+        "primer_apellido": "LOPEZ",
+        "segundo_apellido": "PEREZ",
+        "denominacion_razon_social": "",
+        "regimen_capital": "",
+        "nombre_comercial": "",
+        "fecha_inicio_operaciones": "20/05/2015",
+        "estatus_padron": "ACTIVO",
+        "fecha_ultimo_cambio_estado": "05/05/2022",
+        "lugar_fecha_emision": "CIUDAD DE MEXICO A 05 DE MAYO DE 2022",
+        "codigo_postal": "03100",
+        "tipo_vialidad": "CALLE",
+        "nombre_vialidad": "INSURGENTES",
+        "numero_exterior": "45",
+        "numero_interior": "B",
+        "colonia": "DEL VALLE",
+        "localidad": "CIUDAD DE MEXICO",
+        "municipio": "BENITO JUAREZ",
+        "entidad_federativa": "CIUDAD DE MEXICO",
+        "entre_calle": "MIGUEL LAURENT",
+        "y_calle": "PROVIDENCIA",
+        "actividades_economicas": [
+          {
+            "orden": "1",
+            "actividad": "Servicios profesionales",
+            "porcentaje": "100",
+            "fecha_inicio": "20/05/2015",
+            "fecha_fin": "20/05/2015"
+          }
+        ],
+        "regimenes": [
+          {
+            "regimen": "Régimen Simplificado de Confianza",
+            "fecha_inicio": "01/01/2022",
+            "fecha_fin": "01/01/2022"
+          }
+        ],
+        "obligaciones": [
+          {
+            "descripcion": "Declaración anual",
+            "descripcion_vencimiento": "En el mes de abril",
+            "fecha_inicio": "20/05/2015",
+            "fecha_fin": "20/05/2015"
+          }
+        ]
+      },
+      "errores_validacion": [],
+      "error": null
+    },
+    {
+      "archivo": "04_dificil_incompleto.txt",
+      "extractor": "constancia_situacion_fiscal",
+      "modelo": "llama3.2",
+      "ok": false,
+      "estado": "parcial",
+      "datos": {
+        "rfc": "",
+        "curp": "PEDR",
+        "id_cif": "ABC",
+        "nombre": "PEDRO SANCHEZ",
+        "primer_apellido": "",
+        "segundo_apellido": "",
+        "denominacion_razon_social": "",
+        "regimen_capital": "",
+        "nombre_comercial": "",
+        "fecha_inicio_operaciones": "2018-07-01",
+        "estatus_padron": "NO LOCALIZADO",
+        "fecha_ultimo_cambio_estado": "",
+        "lugar_fecha_emision": "",
+        "codigo_postal": "",
+        "tipo_vialidad": "",
+        "nombre_vialidad": "",
+        "numero_exterior": "",
+        "numero_interior": "",
+        "colonia": "N/A",
+        "localidad": "",
+        "municipio": "",
+        "entidad_federativa": "",
+        "entre_calle": "",
+        "y_calle": "",
+        "actividades_economicas": [
+          {
+            "orden": "",
+            "actividad": "comercio",
+            "porcentaje": "",
+            "fecha_inicio": "",
+            "fecha_fin": ""
+          }
+        ],
+        "regimenes": [],
+        "obligaciones": []
+      },
+      "errores_validacion": [
+        {
+          "campo": "rfc",
+          "valor": "",
+          "motivo": "Campo obligatorio 'rfc' vacío."
+        },
+        {
+          "campo": "curp",
+          "valor": "PEDR",
+          "motivo": "El valor no cumple el formato 'CURP mexicana de 18 caracteres' (ejemplo: GARC850101HDFRRN09)."
+        },
+        {
+          "campo": "id_cif",
+          "valor": "ABC",
+          "motivo": "El valor no cumple el formato 'solo dígitos (0-9)' (ejemplo: 123)."
+        },
+        {
+          "campo": "fecha_inicio_operaciones",
+          "valor": "2018-07-01",
+          "motivo": "El valor no cumple el formato 'fecha dd/mm/aaaa' (ejemplo: 15/03/2019)."
+        },
+        {
+          "campo": "rfc",
+          "valor": "",
+          "motivo": "Value error, Campo obligatorio 'rfc' vacío"
+        }
+      ],
+      "error": "Extracción parcialmente exitosa: hay datos útiles pero faltan campos obligatorios o hay errores de formato. Revisa errores_validacion."
+    },
+    {
+      "archivo": "05_dificil_ambiguo.txt",
+      "extractor": "constancia_situacion_fiscal",
+      "modelo": "llama3.2",
+      "ok": false,
+      "estado": "parcial",
+      "datos": {
+        "rfc": "XAXX010101000",
+        "curp": "CURP_INVALIDA_123",
+        "id_cif": "1122334455",
+        "nombre": "ANA",
+        "primer_apellido": "RUIZ",
+        "segundo_apellido": "",
+        "denominacion_razon_social": "",
+        "regimen_capital": "",
+        "nombre_comercial": "",
+        "fecha_inicio_operaciones": "32/13/2019",
+        "estatus_padron": "NO LOCALIZADO",
+        "fecha_ultimo_cambio_estado": "",
+        "lugar_fecha_emision": "",
+        "codigo_postal": "1234",
+        "tipo_vialidad": "",
+        "nombre_vialidad": "",
+        "numero_exterior": "",
+        "numero_interior": "",
+        "colonia": "12 DE OCTUBRE",
+        "localidad": "",
+        "municipio": "",
+        "entidad_federativa": "",
+        "entre_calle": "",
+        "y_calle": "",
+        "actividades_economicas": [
+          {
+            "orden": "1",
+            "actividad": "Algo de servicios",
+            "porcentaje": "50",
+            "fecha_inicio": "01/01/2019",
+            "fecha_fin": ""
+          },
+          {
+            "orden": "2",
+            "actividad": "sin porcentaje ni fecha",
+            "porcentaje": "",
+            "fecha_inicio": "",
+            "fecha_fin": ""
+          }
+        ],
+        "regimenes": [],
+        "obligaciones": [
+          {
+            "descripcion": "ilegible",
+            "descripcion_vencimiento": "",
+            "fecha_inicio": "",
+            "fecha_fin": ""
+          }
+        ]
+      },
+      "errores_validacion": [
+        {
+          "campo": "curp",
+          "valor": "CURP_INVALIDA_123",
+          "motivo": "El valor no cumple el formato 'CURP mexicana de 18 caracteres' (ejemplo: GARC850101HDFRRN09)."
+        },
+        {
+          "campo": "fecha_inicio_operaciones",
+          "valor": "32/13/2019",
+          "motivo": "El valor no cumple el formato 'fecha dd/mm/aaaa' (ejemplo: 15/03/2019)."
+        },
+        {
+          "campo": "codigo_postal",
+          "valor": "1234",
+          "motivo": "El valor no cumple el formato 'código postal de 5 dígitos' (ejemplo: 01000)."
+        }
+      ],
+      "error": "Extracción parcialmente exitosa: hay datos útiles pero faltan campos obligatorios o hay errores de formato. Revisa errores_validacion."
+    },
+    {
+      "archivo": "06_facil_suspendido.txt",
+      "extractor": "constancia_situacion_fiscal",
+      "modelo": "llama3.2",
+      "ok": true,
+      "estado": "exito",
+      "datos": {
+        "rfc": "HERN750315JKL",
+        "curp": "HERN750315HDFRRS01",
+        "id_cif": "3344556677",
+        "nombre": "LUIS",
+        "primer_apellido": "HERNANDEZ",
+        "segundo_apellido": "MARTINEZ",
+        "denominacion_razon_social": "",
+        "regimen_capital": "",
+        "nombre_comercial": "",
+        "fecha_inicio_operaciones": "10/08/2005",
+        "estatus_padron": "SUSPENDIDO",
+        "fecha_ultimo_cambio_estado": "12/12/2023",
+        "lugar_fecha_emision": "",
+        "codigo_postal": "64000",
+        "tipo_vialidad": "CALLE",
+        "nombre_vialidad": "MORELOS",
+        "numero_exterior": "12",
+        "numero_interior": "",
+        "colonia": "CENTRO",
+        "localidad": "MONTERREY",
+        "municipio": "MONTERREY",
+        "entidad_federativa": "NUEVO LEON",
+        "entre_calle": "",
+        "y_calle": "",
+        "actividades_economicas": [
+          {
+            "orden": "1",
+            "actividad": "Arrendamiento",
+            "porcentaje": "100",
+            "fecha_inicio": "10/08/2005",
+            "fecha_fin": "12/12/2023"
+          }
+        ],
+        "regimenes": [
+          {
+            "regimen": "Arrendamiento",
+            "fecha_inicio": "10/08/2005",
+            "fecha_fin": "12/12/2023"
+          }
+        ],
+        "obligaciones": []
+      },
+      "errores_validacion": [],
+      "error": null
+    }
+  ]
+}

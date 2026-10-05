@@ -1,0 +1,52 @@
+{
+  "archivo": "06_facil_suspendido.txt",
+  "extractor": "constancia_situacion_fiscal",
+  "modelo": "llama3.2",
+  "ok": true,
+  "estado": "exito",
+  "datos": {
+    "rfc": "HERN750315JKL",
+    "curp": "HERN750315HDFRRS01",
+    "id_cif": "3344556677",
+    "nombre": "LUIS",
+    "primer_apellido": "HERNANDEZ",
+    "segundo_apellido": "MARTINEZ",
+    "denominacion_razon_social": "",
+    "regimen_capital": "",
+    "nombre_comercial": "",
+    "fecha_inicio_operaciones": "10/08/2005",
+    "estatus_padron": "SUSPENDIDO",
+    "fecha_ultimo_cambio_estado": "12/12/2023",
+    "lugar_fecha_emision": "",
+    "codigo_postal": "64000",
+    "tipo_vialidad": "CALLE",
+    "nombre_vialidad": "MORELOS",
+    "numero_exterior": "12",
+    "numero_interior": "",
+    "colonia": "CENTRO",
+    "localidad": "MONTERREY",
+    "municipio": "MONTERREY",
+    "entidad_federativa": "NUEVO LEON",
+    "entre_calle": "",
+    "y_calle": "",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Arrendamiento",
+        "porcentaje": "100",
+        "fecha_inicio": "10/08/2005",
+        "fecha_fin": "12/12/2023"
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "Arrendamiento",
+        "fecha_inicio": "10/08/2005",
+        "fecha_fin": "12/12/2023"
+      }
+    ],
+    "obligaciones": []
+  },
+  "errores_validacion": [],
+  "error": null
+}

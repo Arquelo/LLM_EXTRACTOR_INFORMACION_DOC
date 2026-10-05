@@ -1,0 +1,72 @@
+{
+  "archivo": "04_dificil_incompleto.txt",
+  "extractor": "constancia_situacion_fiscal",
+  "modelo": "llama3.2",
+  "ok": false,
+  "estado": "parcial",
+  "datos": {
+    "rfc": "",
+    "curp": "PEDR",
+    "id_cif": "ABC",
+    "nombre": "PEDRO SANCHEZ",
+    "primer_apellido": "",
+    "segundo_apellido": "",
+    "denominacion_razon_social": "",
+    "regimen_capital": "",
+    "nombre_comercial": "",
+    "fecha_inicio_operaciones": "2018-07-01",
+    "estatus_padron": "NO LOCALIZADO",
+    "fecha_ultimo_cambio_estado": "",
+    "lugar_fecha_emision": "",
+    "codigo_postal": "",
+    "tipo_vialidad": "",
+    "nombre_vialidad": "",
+    "numero_exterior": "",
+    "numero_interior": "",
+    "colonia": "N/A",
+    "localidad": "",
+    "municipio": "",
+    "entidad_federativa": "",
+    "entre_calle": "",
+    "y_calle": "",
+    "actividades_economicas": [
+      {
+        "orden": "",
+        "actividad": "comercio",
+        "porcentaje": "",
+        "fecha_inicio": "",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [],
+    "obligaciones": []
+  },
+  "errores_validacion": [
+    {
+      "campo": "rfc",
+      "valor": "",
+      "motivo": "Campo obligatorio 'rfc' vacío."
+    },
+    {
+      "campo": "curp",
+      "valor": "PEDR",
+      "motivo": "El valor no cumple el formato 'CURP mexicana de 18 caracteres' (ejemplo: GARC850101HDFRRN09)."
+    },
+    {
+      "campo": "id_cif",
+      "valor": "ABC",
+      "motivo": "El valor no cumple el formato 'solo dígitos (0-9)' (ejemplo: 123)."
+    },
+    {
+      "campo": "fecha_inicio_operaciones",
+      "valor": "2018-07-01",
+      "motivo": "El valor no cumple el formato 'fecha dd/mm/aaaa' (ejemplo: 15/03/2019)."
+    },
+    {
+      "campo": "rfc",
+      "valor": "",
+      "motivo": "Value error, Campo obligatorio 'rfc' vacío"
+    }
+  ],
+  "error": "Extracción parcialmente exitosa: hay datos útiles pero faltan campos obligatorios o hay errores de formato. Revisa errores_validacion."
+}

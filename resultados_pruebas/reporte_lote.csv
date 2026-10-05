@@ -1,0 +1,7 @@
+archivo,estado,ok,error,errores_validacion
+01_facil_persona_fisica.txt,exito,True,,
+02_facil_persona_moral.txt,exito,True,,
+03_facil_activo_completo.txt,exito,True,,
+04_dificil_incompleto.txt,parcial,False,Extracción parcialmente exitosa: hay datos útiles pero faltan campos obligatorios o hay errores de formato. Revisa errores_validacion.,"rfc: Campo obligatorio 'rfc' vacío.; curp: El valor no cumple el formato 'CURP mexicana de 18 caracteres' (ejemplo: GARC850101HDFRRN09).; id_cif: El valor no cumple el formato 'solo dígitos (0-9)' (ejemplo: 123).; fecha_inicio_operaciones: El valor no cumple el formato 'fecha dd/mm/aaaa' (ejemplo: 15/03/2019).; rfc: Value error, Campo obligatorio 'rfc' vacío"
+05_dificil_ambiguo.txt,parcial,False,Extracción parcialmente exitosa: hay datos útiles pero faltan campos obligatorios o hay errores de formato. Revisa errores_validacion.,curp: El valor no cumple el formato 'CURP mexicana de 18 caracteres' (ejemplo: GARC850101HDFRRN09).; fecha_inicio_operaciones: El valor no cumple el formato 'fecha dd/mm/aaaa' (ejemplo: 15/03/2019).; codigo_postal: El valor no cumple el formato 'código postal de 5 dígitos' (ejemplo: 01000).
+06_facil_suspendido.txt,exito,True,,

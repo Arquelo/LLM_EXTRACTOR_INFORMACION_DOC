@@ -17,6 +17,12 @@ cp .env.example .env
 
 El backend carga `.env` de la raíz del repo y, si existe, `backend/.env` (este último tiene prioridad).
 
+## Resultados esperados
+
+Las entradas de prueba (casos fáciles y difíciles) están en [`backend/docs/muestras/`](backend/docs/muestras/).  
+Una corrida de referencia del lote académico queda en [`resultados_pruebas/`](resultados_pruebas/) (JSON por documento + `reporte_lote.json` / `.csv`), para contrastar tu ejecución local.
+
+
 ## Backend
 
 ```bash

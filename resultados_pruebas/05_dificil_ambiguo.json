@@ -1,0 +1,76 @@
+{
+  "archivo": "05_dificil_ambiguo.txt",
+  "extractor": "constancia_situacion_fiscal",
+  "modelo": "llama3.2",
+  "ok": false,
+  "estado": "parcial",
+  "datos": {
+    "rfc": "XAXX010101000",
+    "curp": "CURP_INVALIDA_123",
+    "id_cif": "1122334455",
+    "nombre": "ANA",
+    "primer_apellido": "RUIZ",
+    "segundo_apellido": "",
+    "denominacion_razon_social": "",
+    "regimen_capital": "",
+    "nombre_comercial": "",
+    "fecha_inicio_operaciones": "32/13/2019",
+    "estatus_padron": "NO LOCALIZADO",
+    "fecha_ultimo_cambio_estado": "",
+    "lugar_fecha_emision": "",
+    "codigo_postal": "1234",
+    "tipo_vialidad": "",
+    "nombre_vialidad": "",
+    "numero_exterior": "",
+    "numero_interior": "",
+    "colonia": "12 DE OCTUBRE",
+    "localidad": "",
+    "municipio": "",
+    "entidad_federativa": "",
+    "entre_calle": "",
+    "y_calle": "",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Algo de servicios",
+        "porcentaje": "50",
+        "fecha_inicio": "01/01/2019",
+        "fecha_fin": ""
+      },
+      {
+        "orden": "2",
+        "actividad": "sin porcentaje ni fecha",
+        "porcentaje": "",
+        "fecha_inicio": "",
+        "fecha_fin": ""
+      }
+    ],
+    "regimenes": [],
+    "obligaciones": [
+      {
+        "descripcion": "ilegible",
+        "descripcion_vencimiento": "",
+        "fecha_inicio": "",
+        "fecha_fin": ""
+      }
+    ]
+  },
+  "errores_validacion": [
+    {
+      "campo": "curp",
+      "valor": "CURP_INVALIDA_123",
+      "motivo": "El valor no cumple el formato 'CURP mexicana de 18 caracteres' (ejemplo: GARC850101HDFRRN09)."
+    },
+    {
+      "campo": "fecha_inicio_operaciones",
+      "valor": "32/13/2019",
+      "motivo": "El valor no cumple el formato 'fecha dd/mm/aaaa' (ejemplo: 15/03/2019)."
+    },
+    {
+      "campo": "codigo_postal",
+      "valor": "1234",
+      "motivo": "El valor no cumple el formato 'código postal de 5 dígitos' (ejemplo: 01000)."
+    }
+  ],
+  "error": "Extracción parcialmente exitosa: hay datos útiles pero faltan campos obligatorios o hay errores de formato. Revisa errores_validacion."
+}

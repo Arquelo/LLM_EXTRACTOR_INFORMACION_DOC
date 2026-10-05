@@ -1,0 +1,59 @@
+{
+  "archivo": "03_facil_activo_completo.txt",
+  "extractor": "constancia_situacion_fiscal",
+  "modelo": "llama3.2",
+  "ok": true,
+  "estado": "exito",
+  "datos": {
+    "rfc": "LOPE900202XYZ",
+    "curp": "LOPE900202MDFRRN08",
+    "id_cif": "5566778899",
+    "nombre": "MARIA",
+    "primer_apellido": "LOPEZ",
+    "segundo_apellido": "PEREZ",
+    "denominacion_razon_social": "",
+    "regimen_capital": "",
+    "nombre_comercial": "",
+    "fecha_inicio_operaciones": "20/05/2015",
+    "estatus_padron": "ACTIVO",
+    "fecha_ultimo_cambio_estado": "05/05/2022",
+    "lugar_fecha_emision": "CIUDAD DE MEXICO A 05 DE MAYO DE 2022",
+    "codigo_postal": "03100",
+    "tipo_vialidad": "CALLE",
+    "nombre_vialidad": "INSURGENTES",
+    "numero_exterior": "45",
+    "numero_interior": "B",
+    "colonia": "DEL VALLE",
+    "localidad": "CIUDAD DE MEXICO",
+    "municipio": "BENITO JUAREZ",
+    "entidad_federativa": "CIUDAD DE MEXICO",
+    "entre_calle": "MIGUEL LAURENT",
+    "y_calle": "PROVIDENCIA",
+    "actividades_economicas": [
+      {
+        "orden": "1",
+        "actividad": "Servicios profesionales",
+        "porcentaje": "100",
+        "fecha_inicio": "20/05/2015",
+        "fecha_fin": "20/05/2015"
+      }
+    ],
+    "regimenes": [
+      {
+        "regimen": "Régimen Simplificado de Confianza",
+        "fecha_inicio": "01/01/2022",
+        "fecha_fin": "01/01/2022"
+      }
+    ],
+    "obligaciones": [
+      {
+        "descripcion": "Declaración anual",
+        "descripcion_vencimiento": "En el mes de abril",
+        "fecha_inicio": "20/05/2015",
+        "fecha_fin": "20/05/2015"
+      }
+    ]
+  },
+  "errores_validacion": [],
+  "error": null
+}
